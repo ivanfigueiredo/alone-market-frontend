@@ -34,7 +34,12 @@ const Page = () => {
             setPessoaJuridica(false);
             return;
         }
-                            
+        
+        if( pessoaFisica && cnpj){
+            alert("Tipo de fornecedor inválido!");
+            return;
+        }
+
         if(!logged){
             alert("Você não está logado!");
         }else{
