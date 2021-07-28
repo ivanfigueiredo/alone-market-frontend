@@ -23,7 +23,7 @@
     "xlsx": "^0.17.0"
   },
   "scripts": {    
-    "start": "react-scripts --max_old_space_size=512 start",
+    "start": "react-scripts --max_old_space_size=2560 start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
