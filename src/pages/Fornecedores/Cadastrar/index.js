@@ -36,7 +36,7 @@ const Page = () => {
         }
         
         if( pessoaFisica && cnpj){
-            alert("Tipo de fornecedor inválidoo!");
+            alert("Tipo de fornecedor inválido!");
             return;
         }
 
