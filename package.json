@@ -1,10 +1,7 @@
 {
   "name": "alone-frontend",
   "version": "0.1.0",
-  "private": true,
-  "engines": {
-    "node": "14.x"
-  },
+  "private": true,  
   "dependencies": {
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
@@ -22,7 +19,7 @@
     "xlsx": "^0.17.0"
   },
   "scripts": {    
-    "start": "react-scripts --max_old_space_size=460 start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
