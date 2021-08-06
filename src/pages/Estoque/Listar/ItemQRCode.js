@@ -11,7 +11,7 @@ export class ExportItemToQRCode extends React.PureComponent {
                 <label style={{fontSize: 20}}>{item.codigoDeBarras}<br />{item.dataValidade}<br />{item.name}</label>                                                                                                                     
                   <p style={{marginRight: 30, marginTop: 10, flexWrap:"wrap"}}>                                                
                     <QRCode 
-                        value={item.codigoDeBarras + "  " + item.dataValidade}
+                        value={item.codigoDeBarras + "  " +"Val-"+item.dataValidade}
                         size={150}
                         level={"L"}
                         includeMargin={false}                                                        
