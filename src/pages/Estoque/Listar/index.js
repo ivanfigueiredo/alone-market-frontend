@@ -7,14 +7,15 @@ import useApi from '../../../helpers/AloneAPI';
 import {mudarTitulo, isLogged} from '../../../helpers/AuthHandler';
 
 import {ExportCSV} from './ExportCSV';
-
-import { useReactToPrint } from 'react-to-print';
-
+import { ExportToQRCode } from './QRCode';
+import { ExportItemToQRCode } from './ItemQRCode';
 import { ComponentToPrint } from './ComponentToPrint';
+import { useReactToPrint } from 'react-to-print';
 
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import { Impressao } from './Impressao';
+
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 
@@ -22,31 +23,64 @@ const Page = () => {
 
     let api = useApi();
     let logged = isLogged();
-    mudarTitulo("Listar Estoque");
+    mudarTitulo("Listar Estoque");    
 
-    const componentRef = useRef(0);
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-      });
-    const fileName = "ListarEstoque";
-
-
-    const [estoqueLista, setEstoqueLista] = useState([]);
+    const [estoqueLista, setEstoqueLista] = useState([]);        
     const [id, setId] = useState('');    
     const [produto, setProduto] = useState('');
     const [qtdMinima, setQtdMinima] = useState('');       
     const [qtd, setQtd] = useState('');
     const [dataDeValidade, setDataDeValidade] = useState('');                
-    const [busca, setBusca] = useState('');
+    const [busca, setBusca] = useState(''); 
+    const stokCopy = Array.from(estoqueLista);  
+    const [iteim, setIteim] = useState([]);
+    const array = [];
+    
+    const fileName = "ListarEstoque";
+    const componentRef = useRef(null);        
+    const componentQRCodeRef = useRef(null);
+    const componentRefImprimir = useRef(null);
+    
+    const handleQRDCodeLista = useReactToPrint({        
+        content: () => componentRef.current,        
+    });
+
+    const handleImprimir = useReactToPrint({        
+        content: () => componentRefImprimir.current,        
+    });
+         
+    const handleQRCode = useReactToPrint({        
+        content: () => componentQRCodeRef.current,                        
+    }); 
+
+    const handleSetItem = (item) => {         
+        for(let i=0; i < item.qtd; i++){
+            array.push(item);
+        }        
+        setIteim([]);   
+        setIteim(array);      
+        handleQRCode();   
+    }   
+    
+    const handleSetArrayIteim = () => {                     
+        for(let j=0; j < estoqueLista.length; j++){
+            for(let i=0; i < estoqueLista[j].qtd; i++){
+                array.push(estoqueLista[j])                  
+            }                                     
+        }      
+        setIteim(array); 
+        handleQRDCodeLista();
+    }            
 
     useEffect(()=>{
+        
         const getListEstoque = async () => {
             const estoque = await api.getListaEstoque();
             setEstoqueLista(estoque);
-        }
-        getListEstoque();
+        }                        
+        getListEstoque();                        
     }, []);
-
+    
     const handleGerarDocumento = async () => {
         const classeImpressao = new Impressao(estoqueLista);
         const documento = await classeImpressao.PreparaDocumento();
@@ -103,12 +137,40 @@ const Page = () => {
     }
     
     const estoqueFiltro = estoqueLista.filter((estok)=> estok.name.toLowerCase().includes(busca.toLowerCase()) || 
-    estok.dataValidade.toLowerCase().includes(busca.toLowerCase()) ||
-    estok.dataCadastro.toLowerCase().includes(busca.toLowerCase()) ||
+    estok.dataValidade.includes(busca) ||
+    estok.dataCadastro.includes(busca) ||
     estok.fabricante.toLowerCase().includes(busca.toLowerCase()) ||
     estok.fornecedor.toLowerCase().includes(busca.toLowerCase()) ||
-    estok.unidadeDeMedida.toLowerCase().includes(busca.toLowerCase()) ||
-    estok.codigoDeBarras.includes(busca));
+    estok.unidadeDeMedida.includes(busca) ||
+    estok.codigoDeBarras.includes(busca));        
+
+    const handleCrescente = () => {        
+        stokCopy.sort(function(a, b) {
+            let data1 = a.dataValidade.split("/"),
+                data2 = b.dataValidade.split("/");
+            let x = (data1[2] + "/" + data1[1] + "/" + data1[0]),
+                y = (data2[2] + "/" + data2[1] + "/" + data2[0]);
+            if(Date.parse(x) < Date.parse(y)){
+                return 1;
+            }
+        });           
+        setEstoqueLista([]);        
+        setEstoqueLista(stokCopy);
+    };
+   
+    const handleDecrescente = () => {
+        stokCopy.sort(function(a, b) {
+            let data1 = a.dataValidade.split("/"),
+                data2 = b.dataValidade.split("/");
+            let x = (data1[2] + "/" + data1[1] + "/" + data1[0]),
+                y = (data2[2] + "/" + data2[1] + "/" + data2[0]);
+            if(Date.parse(x) > Date.parse(y)){
+                return 1;
+            }
+        });           
+        setEstoqueLista([]);        
+        setEstoqueLista(stokCopy);  
+    };
 
     return (
         <BrowserRouter>
@@ -137,48 +199,67 @@ const Page = () => {
                                                     PDF
                                                 </button>
                                                 <div style={{ display: "none" }}>
-                                                    <ComponentToPrint dadosParaImpressao={estoqueLista} ref={componentRef} />                                                    
+                                                    <ComponentToPrint dadosParaImpressao={estoqueLista} ref={componentRefImprimir} />                                                    
                                                 </div>
-                                                <button type="button" className="btn btn-success" onClick={handlePrint}>Print</button>
-                                                
-                                                                                
+                                                <button type="button" className="btn btn-success" onClick={handleImprimir}>Print</button>                                                 
+
+                                                <div style={{ display: "none" }}>
+                                                    <ExportToQRCode dadosParaQRCode={iteim} ref={componentRef} />                                                    
+                                                </div>
+                                                <button type="button" className="btn btn-success" onClick={() => {handleSetArrayIteim()}}>QRCode</button>                                                                                                                             
                                             </div>
                                             
-                                            <div style={{marginLeft: 600}}>
+                                            <div style={{marginLeft: 465}}>
                                                 <div className="input-group">
                                                     <div className="input-group-prepend">
                                                         <div className="input-group-text">
-                                                            <span className="fas fa-search" />
+                                                            <span className="fas fa-search" />  
                                                         </div>
-                                                        <input style={{wdith: 198}} type="text" className="form-control" value={busca} onChange={(e) => {setBusca(e.target.value)}}/>
+                                                        <input style={{wdith: 198}} type="text" className="form-control" onChange={(e) => {setBusca(e.target.value)}}/>
                                                     </div>
                                                 </div>    
                                             </div>
                                         </div>
                                         
                                     </div>
-                                    <table style={{fontSize: 12}} className="table table-bordered table-hover">
+                                    <table style={{fontSize: 10}} className="table table-bordered table-hover">
                                         <thead>
-                                            <tr class="text-center">
+                                            <tr class="text-center">  
                                                 <th>Código</th>
                                                 <th>Produto</th>
                                                 <th>Fornecedor</th>
                                                 <th>Fabricante</th>
-                                                <th>Quant.</th>
-                                                <th>Quant. Minima</th>
+                                                <th>Qtd.</th>
+                                                <th>Qtd. Minima</th>
                                                 <th>Preço</th>
-                                                <th>Valor Em Estoque</th>
-                                                <th>Data de Cadastro</th>
-                                                <th>Data de Validade</th>
+                                                <th>Valor Estoque</th>
+                                                <th>Cadastro</th>
+                                                <th class="text-left">                                                                                                        
+                                                    <ul className="d-flex flex-row navbar-nav">                   
+                                                        <label className="mt-4 mr-2">Validade</label>                                       
+                                                        <li onClick={() => {handleCrescente()}} className="nav-item dropdown">                                                                                                                    
+                                                            <a className="nav-link mt-3">
+                                                                <i className="fas fa-sort-amount-up" />
+                                                            </a>
+                                                        </li>                                                    
+                                                        <li onClick={() => {handleDecrescente()}} className="nav-item dropdown">                                                            
+                                                            <a className="nav-link ml-2 mt-3">
+                                                                <i className="fas fa-sort-amount-down-alt" />
+                                                            </a>
+                                                        </li>
+                                                    </ul>                                                    
+                                                </th>
                                                 <th>Peso/Volume</th>
-                                                <th>Unidade de Medida</th>
-                                                <th>Alterar</th>
+                                                <th>Und Medida</th>
+                                                <th>Editar</th>
+                                                <th>QRCode</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {estoqueFiltro.map(( item ) => {
-                                                return(
-                                                    <tr className="text-left" key={item}>
+                                            {estoqueFiltro.map(( item, index ) => {
+                                                return(      
+                                                                                                  
+                                                    <tr className="text-left" key={index}>                                                        
                                                         <td>{item.codigoDeBarras}</td>    
                                                         <td>{item.name}</td>
                                                         <td>{item.fornecedor}</td>
@@ -199,26 +280,36 @@ const Page = () => {
                                                                     </a>
                                                                 </li>
                                                             </ul>
-                                                        </td>                                                    
+                                                        </td>    
+                                                        <td>
+                                                            <ul className="navbar-nav ml-auto text-center">                                                                
+                                                                <li className="nav-item dropdown">                                                                                                                                      
+                                                                    <a className="nav-link">                                                                                                                                                                                                                     
+                                                                        <i onClick={() => {handleSetItem(item)}} className="fas fa-qrcode" />
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </td>                                                
                                                     </tr>                                                   
                                                 );
                                             })}
                                         </tbody>
                                         <tfoot>
-                                            <tr class="text-center">
-                                            <th>Código</th>
+                                            <tr class="text-center">  
+                                                <th>Código</th>                                              
                                                 <th>Produto</th>
                                                 <th>Fornecedor</th>
                                                 <th>Fabricante</th>
-                                                <th>Quant.</th>
-                                                <th>Quant. Minima</th>
+                                                <th>Qtd.</th>
+                                                <th>Qtd. Minima</th>
                                                 <th>Preço</th>
-                                                <th>Valor Em Estoque</th>
-                                                <th>Data de Cadastro</th>
-                                                <th>Data de Validade</th>
+                                                <th>Valor Estoque</th>
+                                                <th>Cadastro</th>
+                                                <th>Validade</th>
                                                 <th>Peso/Volume</th>
-                                                <th>Unidade de Medida</th>
-                                                <th>Alterar</th>
+                                                <th>Und Medida</th>
+                                                <th>Editar</th>
+                                                <th>QRCode</th>
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -306,6 +397,9 @@ const Page = () => {
                         </div>
                     </section>
                     {/* /.content */}
+                    <div style={{ display: "none" }}>
+                        <ExportItemToQRCode itemsParaQRCode={iteim} ref={componentQRCodeRef} />
+                    </div> 
                 </div>
             <Footer/>
         </BrowserRouter>

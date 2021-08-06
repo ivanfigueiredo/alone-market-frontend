@@ -40,6 +40,11 @@ const Page = () => {
             return;
         }
 
+        if( pessoaJuridica && cpf){
+            alert("Tipo de fornecedor inválido!");
+            return;
+        }
+
         if(!logged){
             alert("Você não está logado!");
         }else{

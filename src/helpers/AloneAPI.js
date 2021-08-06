@@ -2,7 +2,7 @@ import Cookies from 'js-cookie';
 import qs from 'qs';
 
 
-const BASEAPI = "https://backend-alonemarket.herokuapp.com";
+const BASEAPI = "http://localhost:5000";
 
 const apiFetchPost = async (endpoint, body) => {
     if(!body.token){

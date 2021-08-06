@@ -37,7 +37,7 @@ const Page = () => {
                     for(let index in produto){
                         if(codigo === produto[index].codigoDeBarras) {
                             produto[index].qtd = produto[index].qtd + 1;
-                            produto[index].subTotal = (produto[index].qtd * produto[index].valorVenda).toFixed(2);
+                            produto[index].subTotal = (produto[index].qtd * produto[index].preco).toFixed(2);
                             setCodigo('');
                             return;
                         } 
@@ -81,7 +81,7 @@ const Page = () => {
         
         if(produto[index].qtd > 1){ 
             produto[index].qtd = produto[index].qtd - 1;
-            produto[index].subTotal = (produto[index].qtd * produto[index].valorVenda).toFixed(2);
+            produto[index].subTotal = (produto[index].qtd * produto[index].preco).toFixed(2);
             handleTotal();
             codigoInput.current.focus();
             return;
@@ -97,7 +97,7 @@ const Page = () => {
     const handleTotal = async () => {
         var soma = 0;
         for(let i in produto){
-            soma = (soma + (produto[i].qtd * produto[i].valorVenda));
+            soma = (soma + (produto[i].qtd * produto[i].preco));
         }
         setTotal(soma.toFixed(2));
     }
@@ -152,7 +152,7 @@ const Page = () => {
                                         <td class="text-center">{item.pesoVolume}</td>
                                         <td class="text-center">{item.unidadeDeMedida}</td>                                                    
                                         <td class="text-center">{item.qtd}</td>
-                                        <td>{"R$ " + item.valorVenda}</td>                                                                                                                                                        
+                                        <td>{"R$ " + item.preco}</td>                                                                                                                                                        
                                         <td>{"R$ " + item.subTotal}</td>
                                         <td class="text-center">
                                             <button style={{marginLeft: 7, width: 40, height: 40, backgroundColor:"#F00", color:"#FFF"}} className="font-weight-bold justify-contend-center habilitarCursor" onClick={() => {handleCancelar(index)}}>X</button>
