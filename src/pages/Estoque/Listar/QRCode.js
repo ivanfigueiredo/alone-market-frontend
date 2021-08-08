@@ -7,14 +7,14 @@ export class ExportToQRCode extends React.PureComponent {
       <div className="d-flex flex-wrap">        
         {this.props.dadosParaQRCode.map((item, index) =>{                            
             return(
-              <div style={{padding: 20}} key={index} className="signature">                                                               
-                <label style={{fontSize: 20}}>{item.codigoDeBarras}<br />{"Val-"+item.dataValidade}<br />{item.name}</label>                                                                                                                     
-                  <p style={{marginRight: 30, marginTop: 10, flexWrap:"wrap"}}>                                                
+              <div style={{padding: 10}} key={index} className="signature">                                                               
+                <label style={{fontSize: 15}}>{item.codigoDeBarras}<br />{"Val-"+item.dataValidade}<br />{item.name}</label>                                                                                                                     
+                  <p style={{marginRight: 10, marginTop: 10, flexWrap:"wrap"}}>                                                
                     <QRCode 
-                        value={item.codigoDeBarras + "  " +item.dataValidade}
-                        size={150}
+                        value={item.codigoDeBarras+"  "+item.dataValidade}
+                        size={100}
                         level={"L"}
-                        includeMargin={true}                                                        
+                        includeMargin={false}                                                        
                     />
                   </p>                                                                                                                                                                                        
               </div>                      

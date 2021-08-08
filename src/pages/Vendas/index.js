@@ -26,7 +26,8 @@ const Page = () => {
                 window.location.href = '/homeOperador';
             }
             if(codigo !== ''){
-                const json = await api.getProduto(codigo);
+                let dadosProd = codigo.split(" ");                
+                const json = await api.getItemEstoque(dadosProd[0], dadosProd[1]);
         
                 if(json.error){
                     alert(JSON.stringify(json.error));
@@ -35,7 +36,7 @@ const Page = () => {
                 else{
                     
                     for(let index in produto){
-                        if(codigo === produto[index].codigoDeBarras) {
+                        if(dadosProd[0] === produto[index].codigoDeBarras) {
                             produto[index].qtd = produto[index].qtd + 1;
                             produto[index].subTotal = (produto[index].qtd * produto[index].preco).toFixed(2);
                             setCodigo('');

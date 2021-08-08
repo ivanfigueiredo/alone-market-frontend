@@ -176,12 +176,12 @@ const AloneAPI = {
         return json.produtos;
     },
 
-    getProduto:async (codigoDeBarras) => {
+    getItemEstoque:async (codigoDeBarras, dataValidade) => {
         const json = await apiFetchGet(
-            '/produto/item',
-            {codigoDeBarras}
+            '/estoque/estoqueItem',
+            {codigoDeBarras, dataValidade}
         );
-        return json;
+        return json.itemStok;
     },
 
     getProdutoId:async (codigoDeBarras) => {
