@@ -73,7 +73,7 @@ const Page = () => {
             }                                
         }       
         
-        if(pessoaFisica && pessoaJuridica && !pessoaFisica && !pessoaJuridica){
+        if(pessoaFisica && pessoaJuridica){
             alert("Escolha um tipo de Fornecedor!");
             setPessoaFisica(false);
             setPessoaJuridica(false);
