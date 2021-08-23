@@ -24,7 +24,8 @@ export class Impressao {
                 { text: item.dataCadastro, fontSize: 8, alignment: "center" },
                 { text: item.dataValidade, fontSize: 8, alignment: "left" },
                 { text: item.pesoVolume, fontSize: 8, alignment: "center" },
-                { text: item.unidadeDeMedida, fontSize: 8, alignment: "center" }
+                { text: item.unidadeDeMedida, fontSize: 8, alignment: "center" },
+                { text: item.vencido, fontSize: 8, alignment: "center" }
             ])
         });
         return tableContent;
@@ -73,18 +74,19 @@ export class Impressao {
                         headerRows: 1,
                         dontBreakRows: true,
                         body: [
-                            [{text: 'Codigo', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]}, 
-                             {text: 'Produto', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[4,0]}, 
-                             {text: 'Fornecedor', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]}, 
-                             {text: 'Fabricante', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[2,0]}, 
-                             {text: 'Qtd', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]}, 
-                             {text: 'Qtd Mínima', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]}, 
-                             {text: 'Preço', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[3,0]}, 
-                             {text: 'Valor Em Estoque', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[5,0]},
-                             {text: 'Data de Cadastro', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]},
-                             {text: 'Data de Validade', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]},
-                             {text: 'Peso/Volume', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]}, 
-                             {text: 'Unidade de Medida', style: {fontSize: "9", bold: true, alignment: "center"}, margin:[1,0]}, 
+                            [{text: 'Codigo', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Produto', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Fornecedor', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Fabricante', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Qtd', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Qtd Mínima', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Preço', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Valor Em Estoque', style: {fontSize: "9", bold: true, alignment: "center"}},
+                             {text: 'Data de Cadastro', style: {fontSize: "9", bold: true, alignment: "center"}},
+                             {text: 'Data de Validade', style: {fontSize: "9", bold: true, alignment: "center"}},
+                             {text: 'Peso/Volume', style: {fontSize: "9", bold: true, alignment: "center"}},                               
+                             {text: 'Und. Medida', style: {fontSize: "9", bold: true, alignment: "center"}}, 
+                             {text: 'Vencido', style: {fontSize: "9", bold: true, alignment: "center"}}, 
                             ],
                             ...formattedData,
                             

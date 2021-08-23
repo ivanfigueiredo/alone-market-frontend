@@ -120,18 +120,20 @@ const Page = () => {
 
     const handleStatus = async (codigoProd, status) => {
         
+        var res=window.confirm("Realmente deseja alterar o status deste produto?");
+
         if(!logged){
             alert("Você não está logado!");
-        }else{
-
+        }
+        if(res){
             const json = await api.prodStatus(codigoProd, status);
-
             if(json.error){
                 alert(JSON.stringify(json.error));
             }
-
             setCodigo('');
             window.location.reload("/listarProdutos");
+        }else{
+            return;
         }
 
     }
@@ -362,13 +364,16 @@ const Page = () => {
                                             </div>
                                             <div class="mt-2 mr-5">
                                                 {/*Preço do Produto*/}
-                                                <label>Preço:</label>
+                                                <label>Valor Compra:</label>
                                                 <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group mb-1">
                                                     <div className="input-group-prepend">
                                                         <div className="input-group-text">
                                                             <span className="fas fa-dollar-sign" />
                                                         </div>
-                                                        <input type="text" style={{width: 125}} className="form-control" placeholder="Preco" value={novoPreco} onChange={(e)=>{setNovoPreco(e.target.value)}}/>
+                                                        <input type="text" style={{width: 125}} className="form-control" value={novoPreco} onChange={(e)=>{setNovoPreco(e.target.value
+                                                            .replace(/\D/g, '')
+                                                            .replace(/(\d{1,2})$/, ',$1')
+                                                            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'))}}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -380,7 +385,10 @@ const Page = () => {
                                                         <div className="input-group-text">
                                                             <span className="fas fa-dollar-sign" />
                                                         </div>
-                                                        <input type="text" style={{width: 125}} className="form-control" placeholder="Valor" value={novoValorVenda} onChange={(e)=>{setNovoValorVenda(e.target.value)}}/>
+                                                        <input type="text" style={{width: 125}} className="form-control" value={novoValorVenda} onChange={(e)=>{setNovoValorVenda(e.target.value
+                                                            .replace(/\D/g, '')
+                                                            .replace(/(\d{1,2})$/, ',$1')
+                                                            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'))}}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -392,7 +400,7 @@ const Page = () => {
                                                         <div className="input-group-text">
                                                             <span className="fas fa-weight-hanging" />
                                                         </div>
-                                                        <input type="text" style={{width: 118}} className="form-control" value={novoPesoVolume} onChange={(e)=>{setNovoPesoVolume(e.target.value)}}/>
+                                                        <input type="text" style={{width: 118}} className="form-control" value={novoPesoVolume} onChange={(e)=>{setNovoPesoVolume(e.target.value.replace(/\D/, ''))}}/>
                                                     </div>
                                                 </div>
                                             </div>

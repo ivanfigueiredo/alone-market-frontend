@@ -78,20 +78,20 @@ const Page = (props) => {
     }
 
     const handleStatus = async (_id, status) => {
+
+        var res=window.confirm("Realmente deseja alterar o status do Operador?");
         
         if(!logged){
             alert("Você não está logado!");
-        }else{
-
-
-
+        }
+        if(res){
             const json = await api.statusUser(_id, status);
-
             if(json.error){
                 alert(JSON.stringify(json.error));
             }
-
             window.location.reload("/listarOperador");
+        }else{
+            return;
         }
 
     }

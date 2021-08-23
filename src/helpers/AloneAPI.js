@@ -200,10 +200,10 @@ const AloneAPI = {
         return json;
     },
 
-    gerarEstoque:async (codigoDeBarras, dataValidade, qtd, qtdMinima) => {
+    gerarEstoque:async (codigoDeBarras, dataValidade, qtd, qtdMinima, vencido) => {
         const json = await apiFetchPost(
             '/estoque/add',
-            {codigoDeBarras, dataValidade, qtd, qtdMinima}
+            {codigoDeBarras, dataValidade, qtd, qtdMinima, vencido}
         );
         return json;
     },
@@ -219,6 +219,14 @@ const AloneAPI = {
         const json = await apiFetchPut(
             '/estoque/update',
             {_id, novaDataValidade, novaQTD, novaQtdMinima}
+        );
+        return json;
+    },
+
+    altProdVencidos:async (identificador, vencido, _id) => {
+        const json = await apiFetchPut(
+            '/estoque/altProdVencido',
+            {identificador, vencido, _id}
         );
         return json;
     },

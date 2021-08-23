@@ -21,7 +21,7 @@ export class ComponentToPrint extends React.PureComponent {
             <th>Data de Cadastro</th>
             <th>Data de Validade</th>
             <th>Peso/Volume</th>
-            <th>Unidade de Medida</th>
+            <th>Unidade de Medida</th>            
           </thead>
           <tbody>
             {this.props.dadosParaImpressao.map((item) =>{
@@ -38,8 +38,7 @@ export class ComponentToPrint extends React.PureComponent {
                 <td className="text-center">{item.dataCadastro}</td>
                 <td className="text-center">{item.dataValidade}</td>
                 <td className="text-center">{item.pesoVolume}</td>
-                <td className="text-center">{item.unidadeDeMedida}</td>
-                <td className="text-center">{item.status}</td>
+                <td className="text-center">{item.unidadeDeMedida}</td>                
               </tr>
               );
             })}
@@ -57,7 +56,7 @@ export class ComponentToPrint extends React.PureComponent {
                 <th>Data de Cadastro</th>
                 <th>Data de Validade</th>
                 <th>Peso/Volume</th>
-                <th>Unidade de Medida</th>
+                <th>Unidade de Medida</th>                
               </tr>
             </tfoot>
         </table>  

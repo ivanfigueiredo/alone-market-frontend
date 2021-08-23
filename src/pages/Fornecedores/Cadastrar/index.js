@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import useApi from '../../../helpers/AloneAPI';
 import { isLogged, mudarTitulo } from '../../../helpers/AuthHandler';
@@ -25,10 +25,63 @@ const Page = () => {
     const [pessoaFisica, setPessoaFisica] = useState(false);
     const [pessoaJuridica, setPessoaJuridica] = useState(false);
 
-    const opcaoStatus = ["Ativo", "Inativo"];
+    const opcaoStatus = ["Ativo", "Inativo"];    
 
-    const handleCadastrar = async () => { 
-        if(pessoaFisica && pessoaJuridica){
+    const handleCadastrar = async () => {         
+        
+        if(cnpj){
+            let cnpjCheck = false, 
+                foneCheck = false,
+                cepCheck = false;
+            if(cnpj.length < 18){ 
+                cnpjCheck = true;
+            }
+            if(telefone.length < 14){
+                foneCheck = true;
+            }
+            if(cep.length < 9){
+                cepCheck = true;
+            }
+            if(cnpjCheck || foneCheck || cepCheck){
+                alert((cnpjCheck ? "CNPJ Inválido. Faltando: "+(18 - cnpj.length)+" dígito!" : '')
+                +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - telefone.length)+" dígito!" : '')
+                +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));  
+                return;
+         
+            }                     
+        } 
+
+        if(cpf){
+            let cpfCheck = false, 
+                foneCheck = false,
+                cepCheck = false;
+
+            if(cpf.length < 14){
+                cpfCheck = true;
+            }
+            if(telefone.length < 14){
+                foneCheck = true;
+            }
+            if(cep.length < 9){
+                cepCheck = true;
+            }   
+            if(cpfCheck || foneCheck || cepCheck){
+                alert((cpfCheck ? "CPF Inválido. Faltando: "+(14 - cpf.length)+" dígito!" : '')
+                +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - telefone.length)+" dígito!" : '')
+                +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));  
+                return;
+            }                                
+        }       
+        
+        if(pessoaFisica && pessoaJuridica && !pessoaFisica && !pessoaJuridica){
+            alert("Escolha um tipo de Fornecedor!");
+            setPessoaFisica(false);
+            setPessoaJuridica(false);
+            return;
+            
+        }
+
+        if(!pessoaFisica && !pessoaJuridica){
             alert("Escolha um tipo de Fornecedor!");
             setPessoaFisica(false);
             setPessoaJuridica(false);
