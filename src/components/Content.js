@@ -5,18 +5,20 @@ const Content = () => {
     const api = useApi();
 
     const [listarEstoque, setListarEstoque] = useState([]);
-    const [estokVencimento, setEstokVencimento] = useState([]);                  
+    const [estokVencimento, setEstokVencimento] = useState([]);
+    
 
     useEffect(() => {
         const estoqueList = async () => {
-            const sList = await api.getListaEstoque();                       
-            setListarEstoque(sList.filter((stok) => (stok.qtd <= stok.qtdMinima * 0.3)));
-            setEstokVencimento(sList.filter((stok) => ((calcularData(stok.dataValidade) <= 30) ? stok: null))); 
-                          
-            api.altProdVencidos(1, true);
-        }                  
-        estoqueList();                                     
-    }, [2]);        
+            const sList = await api.getListaEstoque();
+            setListarEstoque(sList.filter((stok) => (stok.qtd <= stok.qtdMinima * 0.3))); 
+
+            setEstokVencimento(sList.filter((stok) => ((calcularData(stok.dataValidade) <= 30) ? stok : null)));
+
+                       
+        }        
+        estoqueList();
+    }, []);    
 
     const calcularData = (dataNew) => {
         let dataNova = dataNew.split("/");
@@ -132,7 +134,7 @@ const Content = () => {
                         {/* /.card */}
                         
                     </div>
-                    <div class="col-6">
+                    <div className="col-6">
                             <div className="card">
                                 <div className="card-header border-0">
                                     <h3 className="card-title">Produtos em Baixa</h3>                                    
@@ -167,7 +169,7 @@ const Content = () => {
                                 </div>
                             </div>                            
                     </div>
-                    <div class="col-6">
+                    <div className="col-6">
                             <div className="card">
                                 <div className="card-header border-0">
                                     <h3 className="card-title">Produtos Próximos de Vencer </h3>                                    
@@ -189,16 +191,11 @@ const Content = () => {
                                         <tbody>
                                             {estokVencimento.map((item, index) => {
                                                 return(
-                                                    calcularData(item.dataValidade) >= 0 ?
-                                                    <tr key={index}>                                                        
+                                                    <tr key={index}>
                                                         <td>{item.codigoDeBarras}</td>              
                                                         <td>{item.name}</td>              
-                                                        <td>{calcularData(item.dataValidade)}</td>                                                                                                                                                                                                                                              
+                                                        <td>{calcularData(item.dataValidade)}</td>              
                                                     </tr>
-
-                                                    :
-
-                                                    null
                                                 );                                                
                                             })}                                            
                                         </tbody>

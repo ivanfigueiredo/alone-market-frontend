@@ -35,7 +35,6 @@ const Page = () => {
     const stokCopy = Array.from(estoqueLista);  
     const [iteim, setIteim] = useState([]);
     const array = [];
-    const [altProdVencido, setAltProdVencido] = useState(false);
     
     const fileName = "ListarEstoque";
     const componentRef = useRef(null);        
@@ -173,18 +172,6 @@ const Page = () => {
         setEstoqueLista(stokCopy);  
     };
 
-    const handleAltProdVencido = async (id) => { 
-
-        var res=window.confirm("Realmente deseja vender esse produto?");
-
-        if(res){
-            await api.altProdVencidos(2, false, id);            
-            window.location.reload("/estoqueLista");
-        }else{
-            return;
-        }       
-    }
-
     return (
         <BrowserRouter>
             <Header/>
@@ -262,10 +249,10 @@ const Page = () => {
                                                         </li>
                                                     </ul>                                                    
                                                 </th>
-                                                <th>Peso/Volume</th>                                            
+                                                <th>Peso/Volume</th>
+                                                <th>Und Medida</th>
                                                 <th>Editar</th>
                                                 <th>QRCode</th>
-                                                <th>Vencidos</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -283,7 +270,8 @@ const Page = () => {
                                                         <td>{"R$ " + (parseFloat(item.preco) * item.qtd).toFixed(2)}</td>                                                        
                                                         <td class="text-center">{item.dataCadastro}</td>
                                                         <td class="text-center">{item.dataValidade}</td>
-                                                        <td class="text-center">{item.pesoVolume}</td>                                                        
+                                                        <td class="text-center">{item.pesoVolume}</td>
+                                                        <td class="text-center">{item.unidadeDeMedida}</td>
                                                         <td>
                                                             <ul className="navbar-nav ml-auto text-center">
                                                                 <li data-toggle="modal" data-target="#modal-xl"  onClick={() => {handleEditar(item._id)}} className="nav-item dropdown">
@@ -301,22 +289,7 @@ const Page = () => {
                                                                     </a>
                                                                 </li>
                                                             </ul>
-                                                        </td>           
-                                                        {item.vencido ? 
-                                                            <td>
-                                                                <ul className="navbar-nav ml-auto text-center">                                                                
-                                                                    <li className="nav-item dropdown">                                                                                                                                      
-                                                                        <a className="nav-link">                                                                                                                                                                                                                     
-                                                                            <i onClick={() => {handleAltProdVencido(item._id)}} className="fas fa-exclamation-triangle" />
-                                                                        </a>
-                                                                    </li>
-                                                                </ul>
-                                                            </td>   
-
-                                                            :
-
-                                                            null
-                                                        }                                     
+                                                        </td>                                                
                                                     </tr>                                                   
                                                 );
                                             })}
@@ -333,10 +306,10 @@ const Page = () => {
                                                 <th>Valor Estoque</th>
                                                 <th>Cadastro</th>
                                                 <th>Validade</th>
-                                                <th>Peso/Volume</th>                                                
+                                                <th>Peso/Volume</th>
+                                                <th>Und Medida</th>
                                                 <th>Editar</th>
                                                 <th>QRCode</th>
-                                                <th>Vencidos</th>
                                             </tr>
                                         </tfoot>
                                     </table>

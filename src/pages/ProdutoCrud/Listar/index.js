@@ -120,20 +120,18 @@ const Page = () => {
 
     const handleStatus = async (codigoProd, status) => {
         
-        var res=window.confirm("Realmente deseja alterar o status deste produto?");
-
         if(!logged){
             alert("Você não está logado!");
-        }
-        if(res){
+        }else{
+
             const json = await api.prodStatus(codigoProd, status);
+
             if(json.error){
                 alert(JSON.stringify(json.error));
             }
+
             setCodigo('');
             window.location.reload("/listarProdutos");
-        }else{
-            return;
         }
 
     }
@@ -150,7 +148,7 @@ const Page = () => {
         <BrowserRouter>
             <Header/>
             <Menu/>
-                <div class="content-wrapper">
+                <div className="content-wrapper">
                     {/* Main content */}
                     <section className="content">
                     <div className="container-fluid">
@@ -164,7 +162,7 @@ const Page = () => {
 
                                 {/* /.card-header */}
                                 <div className="card-body"> 
-                                    <div class="card">
+                                    <div className="card">
                                         <div className="card-body table-responsive pad d-flex flex-wrapper">
                                             <div className="btn-group ">
                                                 <ExportCSV csvData={produtoList} fileName={fileName} />
@@ -220,9 +218,9 @@ const Page = () => {
                                                         <td>{item.fabricante}</td>
                                                         <td>{"R$ " + item.preco}</td>
                                                         <td>{"R$ " + item.valorVenda}</td>
-                                                        <td class="text-center">{item.dataCadastro}</td>
-                                                        <td class="text-center">{item.pesoVolume}</td>
-                                                        <td class="text-center">{item.unidadeDeMedida}</td>
+                                                        <td className="text-center">{item.dataCadastro}</td>
+                                                        <td className="text-center">{item.pesoVolume}</td>
+                                                        <td className="text-center">{item.unidadeDeMedida}</td>
                                                         <td>
                                                             <ul className="navbar-nav ml-auto text-center">
                                                                 <li data-toggle="modal" data-target="#modal-xl"  onClick={() => {handleEditar(item.codigoDeBarras)}} className="nav-item dropdown">
@@ -244,15 +242,15 @@ const Page = () => {
                                                     </tr>
                                                     :
                                                     <tr key={item}>
-                                                        <td class="text-black-50">{item.codigoDeBarras}</td>    
-                                                        <td class="text-black-50">{item.name}</td>
-                                                        <td class="text-black-50">{item.fornecedor}</td>
-                                                        <td class="text-black-50">{item.fabricante}</td>
-                                                        <td class="text-black-50">{"R$ " + item.preco}</td>
-                                                        <td class="text-black-50">{"R$ " + item.valorVenda}</td>
-                                                        <td class="text-black-50 text-center">{item.dataCadastro}</td>
-                                                        <td class="text-black-50 text-center">{item.pesoVolume}</td>
-                                                        <td class="text-black-50 text-center">{item.unidadeDeMedida}</td>
+                                                        <td className="text-black-50">{item.codigoDeBarras}</td>    
+                                                        <td className="text-black-50">{item.name}</td>
+                                                        <td className="text-black-50">{item.fornecedor}</td>
+                                                        <td className="text-black-50">{item.fabricante}</td>
+                                                        <td className="text-black-50">{"R$ " + item.preco}</td>
+                                                        <td className="text-black-50">{"R$ " + item.valorVenda}</td>
+                                                        <td className="text-black-50 text-center">{item.dataCadastro}</td>
+                                                        <td className="text-black-50 text-center">{item.pesoVolume}</td>
+                                                        <td className="text-black-50 text-center">{item.unidadeDeMedida}</td>
                                                         <td>
                                                             <ul className="navbar-nav ml-auto text-center">
                                                                 <li data-toggle="modal" data-target="#modal-xl"  onClick={() => {handleEditar(item.codigoDeBarras)}} className="nav-item dropdown">
@@ -324,7 +322,7 @@ const Page = () => {
                                                     </div>
                                                 </div>    
                                             </div>
-                                            <div class="ml-5">
+                                            <div className="ml-5">
                                                 {/* Nome do Produto */}
                                                 <label>Nome do Produto:</label>
                                                 <br />
@@ -337,7 +335,7 @@ const Page = () => {
                                                     </div>
                                                 </div>    
                                             </div>
-                                            <div class="mt-2">
+                                            <div className="mt-2">
                                                 {/* Fornecedor */}
                                                 <label>Fornecedor:</label>
                                                 <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group mb-1">
@@ -350,7 +348,7 @@ const Page = () => {
                                                 </div>
                                             </div>
                                     
-                                            <div class="ml-5 mt-2">
+                                            <div className="ml-5 mt-2">
                                                 {/* Fabricante */}
                                                 <label>Fabricante:</label>
                                                 <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group">
@@ -362,22 +360,19 @@ const Page = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 mr-5">
+                                            <div className="mt-2 mr-5">
                                                 {/*Preço do Produto*/}
-                                                <label>Valor Compra:</label>
+                                                <label>Preço:</label>
                                                 <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group mb-1">
                                                     <div className="input-group-prepend">
                                                         <div className="input-group-text">
                                                             <span className="fas fa-dollar-sign" />
                                                         </div>
-                                                        <input type="text" style={{width: 125}} className="form-control" value={novoPreco} onChange={(e)=>{setNovoPreco(e.target.value
-                                                            .replace(/\D/g, '')
-                                                            .replace(/(\d{1,2})$/, ',$1')
-                                                            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'))}}/>
+                                                        <input type="text" style={{width: 125}} className="form-control" placeholder="Preco" value={novoPreco} onChange={(e)=>{setNovoPreco(e.target.value)}}/>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 mr-5">
+                                            <div className="mt-2 mr-5">
                                             {/*Peso ou Volume*/}
                                             <label>Valor da Venda:</label>
                                                 <div style={{width: 250, backgroundColor: "#FFF"}} className="form-group mb-1">
@@ -385,14 +380,11 @@ const Page = () => {
                                                         <div className="input-group-text">
                                                             <span className="fas fa-dollar-sign" />
                                                         </div>
-                                                        <input type="text" style={{width: 125}} className="form-control" value={novoValorVenda} onChange={(e)=>{setNovoValorVenda(e.target.value
-                                                            .replace(/\D/g, '')
-                                                            .replace(/(\d{1,2})$/, ',$1')
-                                                            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'))}}/>
+                                                        <input type="text" style={{width: 125}} className="form-control" placeholder="Valor" value={novoValorVenda} onChange={(e)=>{setNovoValorVenda(e.target.value)}}/>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-2 mr-5">
+                                            <div className="mt-2 mr-5">
                                                 {/*Peso ou Volume*/}
                                                 <label>Peso/Volume:</label>
                                                 <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group mb-1">
@@ -400,15 +392,15 @@ const Page = () => {
                                                         <div className="input-group-text">
                                                             <span className="fas fa-weight-hanging" />
                                                         </div>
-                                                        <input type="text" style={{width: 118}} className="form-control" value={novoPesoVolume} onChange={(e)=>{setNovoPesoVolume(e.target.value.replace(/\D/, ''))}}/>
+                                                        <input type="text" style={{width: 118}} className="form-control" value={novoPesoVolume} onChange={(e)=>{setNovoPesoVolume(e.target.value)}}/>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="mt-3">
+                                            <div className="mt-3">
                                                 {/*Lista de Unidade de Medidas*/}
                                                 <label>Unidade de Medidas:</label>
-                                                <div style={{width: 400}} class="col-md-5">
-                                                    <div class="form-group" style={{marginLeft: -8}}>
+                                                <div style={{width: 400}} className="col-md-5">
+                                                    <div className="form-group" style={{marginLeft: -8}}>
                                                         <div className="input-group-prepend">
                                                             <div className="input-group-text">
                                                                 <span className="fas fa-ruler-vertical" />

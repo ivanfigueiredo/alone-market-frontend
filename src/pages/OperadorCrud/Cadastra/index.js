@@ -21,7 +21,8 @@ const Page = () => {
     const handleCadastrar = async () => {
         
 		if(nome === '' || password === '' || status === ''){
-			alert("Os campos devem ser preenchidos");
+			alert("Todos campos devem ser preenchidos!");
+            return;
 		}
         if(!logged){
             alert("Você não está logado!");
@@ -71,7 +72,7 @@ const Page = () => {
                                 </div>
                             </div>    
                         </div>
-                        <div class="ml-5">
+                        <div className="ml-5">
                             {/* Nome do Produto */}
                             <label>Password:</label>
                             <br />
@@ -85,10 +86,10 @@ const Page = () => {
                             </div>    
                         </div>
                                                                                
-                        <div class="mt-3">
+                        <div className="mt-3">
                             <label>Status:</label>
                             <div style={{width: 300}}>
-                                <div class="form-group">
+                                <div className="form-group">
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fas fa-question-circle" />
@@ -106,8 +107,8 @@ const Page = () => {
                             </div>
                         </div>
                         <div style={{marginTop: 200, marginLeft: -300}}>
-                            <button type="button" class="btn btn-primary mt-5 mr-5"  onClick={handleCadastrar}>Cadastrar</button>
-                            <button type="button" class="btn btn-primary mt-5 ml-5"  onClick={handleLimpar}>Cancelar</button>
+                            <button type="button" className="btn btn-primary mt-5 mr-5"  onClick={handleCadastrar}>Cadastrar</button>
+                            <button type="button" className="btn btn-primary mt-5 ml-5"  onClick={handleLimpar}>Cancelar</button>
                         </div>
                     </div>
                     

@@ -19,20 +19,6 @@ const Page = () => {
     const [operador, setOperador] = useState('');
     const prodCopy = Array.from(produto);
 
-    const calcularData = (dataNew) => {
-        let dataNova = dataNew.split("/");
-        let data = new Date(dataNova[2] + "/" + dataNova[1] + "/" + dataNova[0]);   
-        let dataAtual = new Date();            
-        let diferenca = Date.parse(dataConverter(data)) - Date.parse(dataConverter(dataAtual));            
-        let days = diferenca/(1000* 3600 * 24);                    
-        return days;        
-    }
-
-    const dataConverter = (data) =>{
-        return data.getFullYear() + "/" + String(data.getMonth()).padStart(2, '0') + "/" + String(data.getDate()).padStart(2, '0');
-    }
-
-
     useEffect(()=>{
         
         const getItem = async (e) => {
@@ -42,15 +28,11 @@ const Page = () => {
             if(codigo !== ''){
                 let dadosProd = codigo.split(" ");                
                 const json = await api.getItemEstoque(dadosProd[0], dadosProd[1]);
-                
+        
                 if(json.error){
                     alert(JSON.stringify(json.error));
                     setCodigo('');
                 } 
-                if(json.vencido){
-                    alert("PRODUTO FORA DA VALIDADE!");    
-                    setCodigo('');
-                }
                 else{
                     
                     for(let index in produto){

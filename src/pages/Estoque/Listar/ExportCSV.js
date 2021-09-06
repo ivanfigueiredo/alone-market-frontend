@@ -29,8 +29,7 @@ export const ExportCSV = ({csvData, fileName}) => {
                 Data_Cadastro: data.dataCadastro,
                 Data_Validade: data.dataValidade,
                 Peso_Volume: data.pesoVolume,
-                Unidade_Medida: data.unidadeDeMedida,
-                Vencido: data.vencido,
+                Unidade_Medida: data.unidadeDeMedida
             })
         });
 

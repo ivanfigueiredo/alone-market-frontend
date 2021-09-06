@@ -68,11 +68,11 @@ const Signin = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group" style={{marginLeft: -8}}>
+                            <div className="col-md-6">
+                                <div className="form-group" style={{marginLeft: -8}}>
                                     <select className="form-control" style={{width: 320}} value={permissao} onChange={e=>{setPermissao(e.target.value)}}>
-                                        <option class="dropdown-item" value="1">Operador</option>
-                                        <option class="dropdown-item" value="0">Administrador</option>
+                                        <option className="dropdown-item" value="1">Operador</option>
+                                        <option className="dropdown-item" value="0">Administrador</option>
                                     </select>
                                 </div>
                             </div>

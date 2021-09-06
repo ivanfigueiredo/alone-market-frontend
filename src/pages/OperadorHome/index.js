@@ -21,7 +21,7 @@ const Page = () => {
                     <div style={{marginLeft: -120}} className="collapse navbar-collapse order-3" id="navbarCollapse">
                         {/* Left navbar links */}
                         <ul className="navbar-nav">
-                            <li class="nav-item">
+                            <li className="nav-item">
                                 <a href="/homeOperador" class="nav-link">Home</a>
                             </li>
                             <li className="nav-item dropdown">

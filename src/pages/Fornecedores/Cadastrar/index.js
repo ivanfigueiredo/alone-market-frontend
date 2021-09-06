@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef} from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import useApi from '../../../helpers/AloneAPI';
 import { isLogged, mudarTitulo } from '../../../helpers/AuthHandler';
@@ -24,15 +24,22 @@ const Page = () => {
     const [status, setStatus] = useState('');
     const [pessoaFisica, setPessoaFisica] = useState(false);
     const [pessoaJuridica, setPessoaJuridica] = useState(false);
+    const [disableCnpj, setDisableCnpj] = useState(false);
+    const [disableCpf, setDisableCpf] = useState(false);
 
-    const opcaoStatus = ["Ativo", "Inativo"];    
+    const opcaoStatus = ["Ativo", "Inativo"];
 
+<<<<<<< HEAD
     const handleCadastrar = async () => {         
         
-        if(cnpj){
+        if(disableCpf){
             let cnpjCheck = false, 
                 foneCheck = false,
-                cepCheck = false;
+                cepCheck = false,
+                razaoSocialCheck = false,
+                bairroCheck = false,
+                statusCheck = false;
+
             if(cnpj.length < 18){ 
                 cnpjCheck = true;
             }
@@ -42,19 +49,34 @@ const Page = () => {
             if(cep.length < 9){
                 cepCheck = true;
             }
+            if(!razaoSocial){
+                razaoSocialCheck = true;
+            }
+            if(!bairro){
+                bairroCheck = true;
+            }
+            if(!status){
+                statusCheck = true;
+            }
             if(cnpjCheck || foneCheck || cepCheck){
-                alert((cnpjCheck ? "CNPJ Inválido. Faltando: "+(18 - cnpj.length)+" dígito!" : '')
-                +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - telefone.length)+" dígito!" : '')
-                +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));  
+                alert((cnpjCheck ? "CNPJ Inválido. Faltando: " + (18 - cnpj.length)+" dígito!" : '')
+                +(foneCheck ? "\nTelefone inválido. Faltando: " + (14 - telefone.length)+" dígito!" : '')
+                +(cepCheck ? "\nCEP Inválido. Faltando: " + (9 - cep.length)+" dígito!" : '')
+                +(razaoSocialCheck ? "\nInforme a Razao Social!" : '')
+                +(bairroCheck ? "\nInforme o Bairro!" : '')
+                +(statusCheck ? "\nInforme o Status do Fornecedor!" : ''));  
                 return;
          
             }                     
         } 
 
-        if(cpf){
+        if(disableCnpj){
             let cpfCheck = false, 
                 foneCheck = false,
-                cepCheck = false;
+                cepCheck = false,
+                razaoSocialCheck = false,
+                bairroCheck = false,
+                statusCheck = false;
 
             if(cpf.length < 14){
                 cpfCheck = true;
@@ -65,10 +87,22 @@ const Page = () => {
             if(cep.length < 9){
                 cepCheck = true;
             }   
-            if(cpfCheck || foneCheck || cepCheck){
-                alert((cpfCheck ? "CPF Inválido. Faltando: "+(14 - cpf.length)+" dígito!" : '')
-                +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - telefone.length)+" dígito!" : '')
-                +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));  
+            if(!razaoSocial){
+                razaoSocialCheck = true;
+            }
+            if(!bairro){
+                bairroCheck = true;
+            }
+            if(!status){
+                statusCheck = true;
+            }
+            if(cpfCheck || foneCheck || cepCheck || razaoSocialCheck || bairroCheck){
+                alert((cpfCheck ? "CPF Inválido. Faltando: " + (14 - cpf.length)+" dígito!" : '')
+                +(foneCheck ? "\nTelefone inválido. Faltando: " + (14 - telefone.length)+" dígito!" : '')
+                +(cepCheck ? "\nCEP Inválido. Faltando: " + (9 - cep.length)+" dígito!" : '')
+                +(razaoSocialCheck ? "\nInforme a Razao Social!" : '')
+                +(bairroCheck ? "\nInforme o Bairro!" : '')
+                +(statusCheck ? "\nInforme o Status do Fornecedor!" : ''));                
                 return;
             }                                
         }       
@@ -82,6 +116,10 @@ const Page = () => {
         }
 
         if(!pessoaFisica && !pessoaJuridica){
+=======
+    const handleCadastrar = async () => { 
+        if(pessoaFisica && pessoaJuridica){
+>>>>>>> parent of 525ff94 (Atualizacao da Aplicacao)
             alert("Escolha um tipo de Fornecedor!");
             setPessoaFisica(false);
             setPessoaJuridica(false);
@@ -109,6 +147,8 @@ const Page = () => {
             }else{
                alert("Fornecedor cadastrado com sucesso!")
             }
+            setDisableCnpj(false);
+            setDisableCpf(false);
             setCnpj('');
             setCpf('');
             setRazaoSocial('');
@@ -141,8 +181,21 @@ const Page = () => {
                         <text style={{marginLeft: 20, fontSize: 20, color:"#FFF", fontWeight:"bold"}}>Cadastrar Fornecedor</text>
                     </div>
                     <div style={{padding: 30, marginLeft: 50, display:"flex", flexWrap:"wrap", backgroundColor:"#FFF"}}>
+                        <div style={{width: 286}}>
+                            <label style={{fontSize: 18}}>Pessoa Física:</label>
+                            <div>
+                                <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setDisableCnpj(disableCnpj ? false : true); setPessoaJuridica(false); setDisableCpf(false)}} onClick={() => {setTipo("pessoaFisica")}} /> 
+                            </div>
+                        </div>
                         
-                        <div>
+                        <div style={{width: 250, marginRight: 150}}>
+                            <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
+                            <div>
+                                <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setDisableCpf(disableCpf ? false : true); setPessoaFisica(false); setDisableCnpj(false)}} onClick={() => {setTipo("pessoaJuridica")}} /> 
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3">
                             {/* Nome do Produto */}
                             <label>CNPJ:</label>
                             <div style={{backgroundColor: "#FFF", width: 238}} className="form-group">
@@ -150,7 +203,7 @@ const Page = () => {
                                     <div className="input-group-text">
                                         <span className="fas fa-building" />
                                     </div>
-                                    <input type="text" className="form-control" placeholder="00.000.000/0000-00" value={cnpj} onChange={(e)=>{setCnpj(e.target.value.replace(/\D/g, '')
+                                    <input type="text" className="form-control" disabled={disableCnpj} placeholder="00.000.000/0000-00" value={cnpj} onChange={(e)=>{setCnpj(e.target.value.replace(/\D/g, '')
                                         .replace(/(\d{2})(\d)/, '$1.$2')
                                         .replace(/(\d{3})(\d)/, '$1.$2')
                                         .replace(/(\d{3})(\d)/, '$1/$2')
@@ -161,7 +214,7 @@ const Page = () => {
                                 </div>
                             </div>    
                         </div>
-                        <div class="ml-5">
+                        <div class="mt-3 ml-5">
                             {/* Nome do Produto */}
                             <label>CPF:</label>
                             <div style={{backgroundColor: "#FFF", width: 238}} className="form-group">
@@ -169,7 +222,7 @@ const Page = () => {
                                     <div className="input-group-text">
                                         <span className="far fa-address-card" />
                                     </div>
-                                    <input type="text" className="form-control" placeholder="000.000.000-00" value={cpf} onChange={(e)=>{setCpf(e.target.value.replace(/\D/g, '')
+                                    <input type="text" className="form-control" disabled={disableCpf} placeholder="000.000.000-00" value={cpf} onChange={(e)=>{setCpf(e.target.value.replace(/\D/g, '')
                                         .replace(/(\d{3})(\d)/, '$1.$2')
                                         .replace(/(\d{3})(\d)/, '$1.$2')
                                         .replace(/(\d{3})(\d)/, '$1-$2')					                    
@@ -180,7 +233,7 @@ const Page = () => {
                             </div>    
                         </div>
 
-                        <div class="ml-5">
+                        <div class="mt-3 ml-5">
                             {/* Nome do Produto */}
                             <label>Razão Social:</label>
                             <div style={{backgroundColor: "#FFF", width: 238}} className="form-group">
@@ -193,7 +246,7 @@ const Page = () => {
                             </div>    
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-3">
                             {/* Nome do Produto */}
                             <label>Telefone:</label>
                             <div style={{backgroundColor: "#FFF", width: 238}} className="form-group">
@@ -211,7 +264,7 @@ const Page = () => {
                             </div>    
                         </div>
 
-                        <div class="mt-4 ml-5">
+                        <div class="mt-3 ml-5">
                             {/* Nome do Produto */}
                             <label>Bairro:</label>
                             <div style={{backgroundColor: "#FFF", width: 238}} className="form-group">
@@ -224,7 +277,7 @@ const Page = () => {
                             </div>    
                         </div>
 
-                        <div class="mt-4 ml-5">
+                        <div class="mt-3 ml-5">
                             {/* Nome do Produto */}
                             <label>CEP:</label>
                             <div style={{backgroundColor: "#FFF", width: 238}} className="form-group">
@@ -241,7 +294,7 @@ const Page = () => {
                             </div>    
                         </div>
 
-                        <div style={{width: 286}} class="mt-4">
+                        <div style={{width: 286, marginRight: 400}} class="mt-3">
                             <label>Status:</label>
                             <div class="col-md-5">
                                 <div style={{width: 238, marginLeft: -8}} class="form-group">
@@ -261,22 +314,8 @@ const Page = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <div style={{width: 286}} class="mt-4">
-                            <label style={{fontSize: 18}}>Pessoa Física:</label>
-                            <div>
-                                <input type="checkbox" checked={pessoaFisica} onChange={() => setPessoaFisica(!pessoaFisica)} onClick={() => {setTipo("pessoaFisica")}} /> 
-                            </div>
-                        </div>
-                        
-                        <div style={{width: 250}} class="mt-4">
-                            <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
-                            <div>
-                                <input type="checkbox" checked={pessoaJuridica} onChange={() => setPessoaJuridica(!pessoaJuridica)} onClick={() => {setTipo("pessoaJuridica")}} /> 
-                            </div>
-                        </div>
-                                                                                                                                          
-                        <div style={{marginTop: 20}}>
+                                                                                                                                                                  
+                        <div style={{marginTop: -10}}>
                             <button type="button" class="btn btn-primary mt-5 mr-5" onClick={() => {handleCadastrar()}} >Cadastrar</button>
                             <button type="button" class="btn btn-primary mt-5 ml-5" onClick={() => {handleLimpar()}} >Cancelar</button>
                         </div>

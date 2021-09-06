@@ -27,7 +27,7 @@ const Page = () => {
             alert("Você não está logado!");
         }else{
 
-            const json = await api.gerarEstoque(codigoBarras, dataValidade, qtd, qtdMinima, false);
+            const json = await api.gerarEstoque(codigoBarras, dataValidade, qtd, qtdMinima);
 
             if(json.error){
                 alert(JSON.stringify(json.error));

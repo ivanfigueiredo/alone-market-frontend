@@ -44,16 +44,72 @@ const Page = () => {
         
         if(!logged){
             alert("Você não está logado!");
+<<<<<<< HEAD
         }
-        if(valorVenda.length < 4){
-            alert("Valor de venda para Produto inválido!");
+        if(!codigo || !nome || !preco || !valorVenda || !unidadeDeMedida || !pesoVolume || !fabricante || !fornecedor || !status){
+            let codigoCheck = false, 
+                nomeCheck = false,
+                fornecedorCheck = false,
+                fabricanteCheck = false,
+                compraCheck = false,
+                vendaCheck = false,
+                pesoVolumeCheck = false,
+                medidaCheck = false,
+                statusCheck = false;
+
+            if(!codigo.length){ 
+                codigoCheck = true;
+            }
+            if(!nome){
+                nomeCheck = true;
+            }
+            if(!fornecedor){
+                fornecedorCheck = true;
+            }
+            if(!fabricante){
+                fabricanteCheck = true;
+            }
+            if(!valorVenda){
+                compraCheck = true;
+            }
+            if(!preco){
+                vendaCheck = true;
+            }
+            if(!pesoVolume){
+                pesoVolumeCheck = true;
+            }
+            if(!unidadeDeMedida){
+                medidaCheck = true;
+            }
+            if(!status){
+                statusCheck = true;
+            }
+            if(codigoCheck || nomeCheck || fornecedorCheck || fabricanteCheck || compraCheck || vendaCheck || pesoVolumeCheck || medidaCheck || statusCheck){
+                alert((codigoCheck ? "Informe o código do Produto!" : '')
+                +(nomeCheck ? "\nInforme o nome do produto!" : '')
+                +(fornecedorCheck ? "\nSelecione o Fornecedor!" : '')
+                +(fabricanteCheck ? "\nInforme o fabricante do produto!" : '')
+                +(compraCheck ? "\nInforme o valor pago no produto!" : '')
+                +(vendaCheck ? "\nInforme o valor de venda!" : '')
+                +(pesoVolumeCheck ? "\nInforme o peso ou volume do produto!" : '')
+                +(medidaCheck ? "\nSelecione a unidade de medida!" : '')
+                +(statusCheck ? "\nInforme o status do produto!" : ''));  
+                return;
+         
+            }                     
+        } 
+        if(valorVenda.length < 4 || !valorVenda){
+            alert("Valor de venda para Produto inválido ou vazio!");
             return;
         }
-        if(preco.length < 4){
-            alert("Valor de compra do produto inválido!");
+        if(preco.length < 4 || !preco){
+            alert("Valor de compra do produto inválido ou vazio!");
             return;
         }
         else{            
+=======
+        }else{            
+>>>>>>> parent of 525ff94 (Atualizacao da Aplicacao)
             const json = await api.addAction(codigo, nome, preco, valorVenda, unidadeDeMedida, pesoVolume, fabricante, fornecedor, status);
 
             if(json.error){
@@ -111,7 +167,7 @@ const Page = () => {
                                 </div>
                             </div>    
                         </div>
-                        <div class="ml-5">
+                        <div className="ml-5">
                             {/* Nome do Produto */}
                             <label>Nome do Produto:</label>
                             <br />
@@ -125,11 +181,11 @@ const Page = () => {
                             </div>    
                         </div>                        
 
-                        <div class="mt-2">
+                        <div className="mt-2">
                             {/*Lista de Unidade de Medidas*/}
                             <label>Fornecedor:</label>
-                            <div style={{width: 400}} class="col-md-5">
-                                <div class="form-group" style={{marginLeft: -8, width: 400}}>
+                            <div style={{width: 400}} className="col-md-5">
+                                <div className="form-group" style={{marginLeft: -8, width: 400}}>
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fas fa-shipping-fast" />
@@ -147,7 +203,7 @@ const Page = () => {
                             </div>
                         </div>
                 
-                        <div class="ml-5 mt-2">
+                        <div className="ml-5 mt-2">
                             {/* Fabricante */}
                             <label>Fabricante:</label>
                             <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group">
@@ -159,23 +215,19 @@ const Page = () => {
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-2 mr-5">
+                        <div className="mt-2 mr-5">
                             {/*Preço do Produto*/}
-                            <label>Valor Compra:</label>
+                            <label>Preço:</label>
                             <div style={{width: 250, backgroundColor: "#FFF"}} className="form-group mb-1">
                                 <div className="input-group-prepend">
                                     <div className="input-group-text">
                                         <span className="fas fa-dollar-sign" />
                                     </div>
-                                    <input type="text" style={{width: 139}} className="form-control" placeholder="valor compra" value={preco} onChange={(e)=>{setPreco(e.target.value
-                                        .replace(/\D/g, '')
-                                        .replace(/(\d{1,2})$/, ',$1')
-                                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
-                                        )}}/>
+                                    <input type="text" style={{width: 139}} className="form-control" placeholder="Preco" value={preco} onChange={(e)=>{setPreco(e.target.value)}}/>
                                 </div>
                             </div>
                         </div>
-                        <div class="ml-4 mt-2 mr-5">
+                        <div className="ml-4 mt-2 mr-5">
                             {/*Peso ou Volume*/}
                             <label>Valor da Venda:</label>
                             <div style={{width: 250, backgroundColor: "#FFF"}} className="form-group mb-1">
@@ -183,14 +235,11 @@ const Page = () => {
                                     <div className="input-group-text">
                                         <span className="fas fa-dollar-sign" />
                                     </div>
-                                    <input type="text" style={{width: 139}} className="form-control" placeholder="valor venda" value={valorVenda} onChange={(e)=>{setValorVenda(e.target.value
-                                        .replace(/\D/g, '')
-                                        .replace(/(\d{1,2})$/, ',$1')
-                                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'))}}/>
+                                    <input type="text" style={{width: 139}} className="form-control" placeholder="Valor" value={valorVenda} onChange={(e)=>{setValorVenda(e.target.value)}}/>
                                 </div>
                             </div>
                         </div>
-                        <div class="ml-5 mt-2">
+                        <div className="ml-5 mt-2">
                             {/*Peso ou Volume*/}
                             <label>Peso/Volume:</label>
                             <div style={{width: 170, backgroundColor: "#FFF"}} className="form-group mb-1">
@@ -198,15 +247,15 @@ const Page = () => {
                                     <div className="input-group-text">
                                         <span className="fas fa-weight-hanging" />
                                     </div>
-                                    <input type="text" style={{width: 139}} className="form-control" value={pesoVolume} onChange={(e)=>{setPesoVolume(e.target.value.replace(/\D/g, ''))}}/>
+                                    <input type="text" style={{width: 139}} className="form-control" value={pesoVolume} onChange={(e)=>{setPesoVolume(e.target.value.replace(/\D/, ''))}}/>
                                 </div>
                             </div>
                         </div>                        
-                        <div class="mt-3 mr-3">
+                        <div className="mt-3 mr-3">
                             {/*Lista de Unidade de Medidas*/}
                             <label>Unidade de Medidas:</label>
-                            <div style={{width: 420}} class="col-md-5">
-                                <div class="form-group" style={{marginLeft: -8, width: 177}}>
+                            <div style={{width: 420}} className="col-md-5">
+                                <div className="form-group" style={{marginLeft: -8, width: 177}}>
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fas fa-ruler-vertical" />
@@ -223,10 +272,10 @@ const Page = () => {
                                 </div>
                             </div>
                         </div>
-                        <div style={{width: 397}} class="mt-3 ml-3">
+                        <div style={{width: 397}} className="mt-3 ml-3">
                             <label style={{marginLeft: 219}}>Status:</label>
-                            <div class="col-md-5">
-                                <div style={{marginLeft: 210, width: 177}} class="form-group">
+                            <div className="col-md-5">
+                                <div style={{marginLeft: 210, width: 177}} className="form-group">
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
                                             <span className="fas fa-question-circle" />
@@ -244,8 +293,8 @@ const Page = () => {
                             </div>
                         </div>
                         <div style={{marginTop: -20}}>
-                            <button type="button" class="btn btn-primary mt-5 mr-5"  onClick={handleCadastrar}>Cadastrar</button>
-                            <button type="button" class="btn btn-primary mt-5 ml-5"  onClick={handleLimpar}>Cancelar</button>
+                            <button type="button" className="btn btn-primary mt-5 mr-5"  onClick={handleCadastrar}>Cadastrar</button>
+                            <button type="button" className="btn btn-primary mt-5 ml-5"  onClick={handleLimpar}>Cancelar</button>
                         </div>
                     </div>
                 </div>

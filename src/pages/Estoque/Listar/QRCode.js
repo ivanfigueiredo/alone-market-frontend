@@ -14,7 +14,7 @@ export class ExportToQRCode extends React.PureComponent {
                         value={item.codigoDeBarras+"  "+item.dataValidade}
                         size={100}
                         level={"L"}
-                        includeMargin={true}                                                        
+                        includeMargin={false}                                                        
                     />
                   </p>                                                                                                                                                                                        
               </div>                      

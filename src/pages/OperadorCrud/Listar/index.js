@@ -78,20 +78,20 @@ const Page = (props) => {
     }
 
     const handleStatus = async (_id, status) => {
-
-        var res=window.confirm("Realmente deseja alterar o status do Operador?");
         
         if(!logged){
             alert("Você não está logado!");
-        }
-        if(res){
+        }else{
+
+
+
             const json = await api.statusUser(_id, status);
+
             if(json.error){
                 alert(JSON.stringify(json.error));
             }
+
             window.location.reload("/listarOperador");
-        }else{
-            return;
         }
 
     }
@@ -116,7 +116,7 @@ const Page = (props) => {
         <BrowserRouter>
             <Header/>
             <Menu/>
-                <div class="content-wrapper">
+                <div className="content-wrapper">
                     {/* Main content */}
                     <section className="content">
                         <div className="container-fluid">
@@ -130,7 +130,7 @@ const Page = (props) => {
 
                                             {/* /.card-header */}
                                             <div className="card-body"> 
-                                                <div class="card">
+                                                <div className="card">
                                                     <div className="card-body table-responsive pad d-flex flex-wrapper">
                                                         <div className="btn-group ">
                                                             <ExportCSV csvData={userList} fileName={fileName} />
@@ -161,7 +161,7 @@ const Page = (props) => {
                                                 </div>
                                                 <table id="example2" className="table table-bordered table-hover">
                                                     <thead>
-                                                        <tr class="text-center">
+                                                        <tr className="text-center">
                                                             <th>Nome</th>
                                                             <th>Permissão</th>
                                                             <th>Editar</th>
@@ -174,7 +174,7 @@ const Page = (props) => {
                                                                 item.status === "Ativo" ?
                                                                 <tr className="text-left" key={index}>
                                                                     <td>{item.name}</td>
-                                                                    <td class="text-center">{item.eAdmin}</td>
+                                                                    <td className="text-center">{item.eAdmin}</td>
                                                                     <td>
                                                                         <ul className="navbar-nav ml-auto text-center">
                                                                             <li data-toggle="modal" data-target="#modal-lg" onClick={() => {handleEditar(item.name)}} className="nav-item dropdown">
@@ -196,8 +196,8 @@ const Page = (props) => {
                                                                 </tr>                                                            
                                                                 :
                                                                 <tr className="text-left" key={index}>
-                                                                    <td class="text-black-50">{item.name}</td>
-                                                                    <td class="text-center text-black-50">{item.eAdmin}</td>
+                                                                    <td className="text-black-50">{item.name}</td>
+                                                                    <td className="text-center text-black-50">{item.eAdmin}</td>
                                                                     <td>
                                                                         <ul className="navbar-nav ml-auto text-center">
                                                                             <li data-toggle="modal" data-target="#modal-lg" onClick={() => {handleEditar(item.name)}} className="nav-item dropdown">
@@ -222,7 +222,7 @@ const Page = (props) => {
                                                         })}
                                                     </tbody>
                                                     <tfoot>
-                                                        <tr class="text-center">
+                                                        <tr className="text-center">
                                                             <th>Nome</th>
                                                             <th>Permissão</th>
                                                             <th>Editar</th>
@@ -251,7 +251,7 @@ const Page = (props) => {
                                     </div>
                                     <div className="modal-body">
                                         <div style={{display:"flex", flexWrap:"wrap"}}>
-                                                <div class="ml-1">
+                                                <div className="ml-1">
                                                     {/* Nome do Produto */}
                                                     <label>Usuário:</label>
                                                     <div style={{backgroundColor: "#FFF", width: 400}} className="form-group">
@@ -263,7 +263,7 @@ const Page = (props) => {
                                                         </div>
                                                     </div>    
                                                 </div>
-                                                <div class="ml-1">
+                                                <div className="ml-1">
                                                     {/* Nome do Produto */}
                                                     <label>Novo Nome:</label>
                                                     <div style={{backgroundColor: "#FFF", width: 400}} className="form-group">
@@ -275,7 +275,7 @@ const Page = (props) => {
                                                         </div>
                                                     </div>    
                                                 </div>
-                                                <div class="ml-1">
+                                                <div className="ml-1">
                                                     {/* Nome do Produto */}
                                                     <label>Password:</label>
                                                     <br />
