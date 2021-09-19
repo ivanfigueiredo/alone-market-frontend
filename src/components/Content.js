@@ -191,13 +191,18 @@ const Content = () => {
                                         <tbody>
                                             {estokVencimento.map((item, index) => {
                                                 return(
-                                                    <tr key={index}>
+                                                    calcularData(item.dataValidade) >= 0 ?
+                                                    <tr key={index}>                                                        
                                                         <td>{item.codigoDeBarras}</td>              
                                                         <td>{item.name}</td>              
-                                                        <td>{calcularData(item.dataValidade)}</td>              
+                                                        <td>{calcularData(item.dataValidade)}</td>                                                                                                                                                                                                                                              
                                                     </tr>
+
+                                                    :
+
+                                                    null
                                                 );                                                
-                                            })}                                            
+                                            })}     
                                         </tbody>
                                     </table>
                                 </div>
