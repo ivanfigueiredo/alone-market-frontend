@@ -29,7 +29,6 @@ const Page = () => {
 
     const opcaoStatus = ["Ativo", "Inativo"];
 
-<<<<<<< HEAD
     const handleCadastrar = async () => {         
         
         if(disableCpf){
@@ -116,10 +115,6 @@ const Page = () => {
         }
 
         if(!pessoaFisica && !pessoaJuridica){
-=======
-    const handleCadastrar = async () => { 
-        if(pessoaFisica && pessoaJuridica){
->>>>>>> parent of 525ff94 (Atualizacao da Aplicacao)
             alert("Escolha um tipo de Fornecedor!");
             setPessoaFisica(false);
             setPessoaJuridica(false);
