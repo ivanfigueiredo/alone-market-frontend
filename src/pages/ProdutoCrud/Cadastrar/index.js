@@ -44,7 +44,7 @@ const Page = () => {
         
         if(!logged){
             alert("Você não está logado!");
-<<<<<<< HEAD
+
         }
         if(!codigo || !nome || !preco || !valorVenda || !unidadeDeMedida || !pesoVolume || !fabricante || !fornecedor || !status){
             let codigoCheck = false, 
@@ -107,9 +107,6 @@ const Page = () => {
             return;
         }
         else{            
-=======
-        }else{            
->>>>>>> parent of 525ff94 (Atualizacao da Aplicacao)
             const json = await api.addAction(codigo, nome, preco, valorVenda, unidadeDeMedida, pesoVolume, fabricante, fornecedor, status);
 
             if(json.error){
