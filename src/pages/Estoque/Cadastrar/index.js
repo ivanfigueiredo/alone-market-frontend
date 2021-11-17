@@ -75,7 +75,7 @@ const Page = () => {
                             </div>    
                         </div>
                         <div class="ml-5">                            
-                                <label>Date de Validade:</label>
+                                <label>Data de Validade:</label>
                                 <div style={{backgroundColor: "#FFF", width: 190}} className="form-group">
                                     <div className="input-group-prepend">
                                         <div className="input-group-text">
