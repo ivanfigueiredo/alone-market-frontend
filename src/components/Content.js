@@ -59,21 +59,19 @@ const Content = () => {
                         <div className="card">
                             <div className="card-header border-0">
                                 <div className="d-flex justify-content-between">
-                                    <h3 className="card-title">Online Store Visitors</h3>
+                                    <h3 className="card-title">Gráfico de vendas mensais</h3>
                                     
                                 </div>                                
                             </div>
                             <div className="card-body">
                                 <div className="d-flex">
                                     <p className="d-flex flex-column">
-                                        <span className="text-bold text-lg">820</span>
-                                        <span>Visitors Over Time</span>
+                                        <span>Visitantes ao longo do tempo</span>
                                     </p>
                                     <p className="ml-auto d-flex flex-column text-right">
                                         <span className="text-success">
                                             <i className="fas fa-arrow-up" /> 12.5%
                                         </span>
-                                        <span className="text-muted">Since last week</span>
                                     </p>
                                 </div>
                                 {/* /.d-flex */}
@@ -82,10 +80,10 @@ const Content = () => {
                                 </div>
                                 <div className="d-flex flex-row justify-content-end">
                                     <span className="mr-2">
-                                        <i className="fas fa-square text-primary" /> This Week
+                                        <i className="fas fa-square text-primary" /> Este Mês
                                     </span>
                                     <span>
-                                        <i className="fas fa-square text-gray" /> Last Week
+                                        <i className="fas fa-square text-gray" /> Mês Passado
                                     </span>
                                 </div>
                             </div>
@@ -99,20 +97,20 @@ const Content = () => {
                         <div className="card">
                             <div className="card-header border-0">
                                 <div className="d-flex justify-content-between">
-                                    <h3 className="card-title text-center">Sales</h3>                                    
+                                    <h3 className="card-title text-center">Gráfico de vendas anuais</h3>                                    
                                 </div>
                             </div>
                             <div className="card-body">
                                 <div className="d-flex">
                                     <p className="d-flex flex-column">
                                         <span className="text-bold text-lg">$18,230.00</span>
-                                        <span>Sales Over Time</span>
+                                        <span>Vendas ao longo do tempo.</span>
                                     </p>
                                     <p className="ml-auto d-flex flex-column text-right">
                                         <span className="text-success">
                                             <i className="fas fa-arrow-up" /> 33.1%
                                         </span>
-                                        <span className="text-muted">Since last month</span>
+                                        <span className="text-muted">Desde o último mês</span>
                                     </p>
                                 </div>
                                 {/* /.d-flex */}
@@ -121,10 +119,10 @@ const Content = () => {
                                 </div>
                                 <div className="d-flex flex-row justify-content-end">
                                     <span className="mr-2">
-                                    <i className="fas fa-square text-primary" /> This year
+                                    <i className="fas fa-square text-primary" /> Este Ano
                                     </span>
                                     <span>
-                                    <i className="fas fa-square text-gray" /> Last year
+                                    <i className="fas fa-square text-gray" /> Ano Passado
                                     </span>
                                 </div>
                             </div>

@@ -63,12 +63,55 @@ const Page = () => {
         pdfMake.createPdf(documento).open();
     }
 
-    const handleAlterar = async () => {
+    const handleAlterar = async (e) => {
         
-
+        e.preventDefault();
 
         if(!logged){
             alert("Você não está logado!");
+        }
+
+        if(cnpj === fornecedorList[handlePosicao(id)].cnpj &&
+           cpf === fornecedorList[handlePosicao(id)].cpf &&
+           nome === fornecedorList[handlePosicao(id)].name &&
+           fone === fornecedorList[handlePosicao(id)].telefone &&
+           novoBairro === fornecedorList[handlePosicao(id)].bairro &&
+           cep === fornecedorList[handlePosicao(id)].cep &&
+           tipo === fornecedorList[handlePosicao(id)].tipo)
+           
+           {
+                alert("Ao menos um campo precisa ser alterado antes de ser enviado!");
+                return;
+           }    
+
+        if((cnpj && pessoaFisica) || (cpf && pessoaJuridica)){
+            alert("Tipo de fornecedor inválido! \nEscolha CNPJ para pessoa Jurídica ou CPF para pessoa física.");
+            return;
+        }
+
+        if(!novoBairro || !fone || !cep || !nome){
+            alert("Os campos não devem ser salvos em branco!");
+            return;
+        }
+
+        if(pessoaJuridica && !cnpj){
+            alert("Informe o CNPJ da empresa!");
+            return;
+        }
+
+        if(pessoaFisica && !cpf){
+            alert("Informe o CPF do fornecedor!");
+            return;
+        }
+
+        if(!pessoaFisica && cpf){
+            alert("Marque o Checkbox correspondente a Pessoa Física!");
+            return;
+        }
+
+        if(!pessoaJuridica && cnpj){
+            alert("Marque o Checkbox correspondente a Pessoa Jurídica!");
+            return;
         }
 
         if(cnpj){
@@ -84,10 +127,12 @@ const Page = () => {
             if(cep.length < 9){
                 cepCheck = true;
             }
+            if(cnpjCheck || foneCheck || cepCheck){
             alert((cnpjCheck ? "CNPJ Inválido. Faltando: "+(18 - cnpj.length)+" dígito!" : '')
             +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
             +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
             return;
+            }
         } 
 
         if(cpf){
@@ -109,17 +154,7 @@ const Page = () => {
             +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
             return;
         }       
-        if(cnpj === fornecedorList[handlePosicao(id)].cnpj &&
-           cpf === fornecedorList[handlePosicao(id)].cpf &&
-           nome === fornecedorList[handlePosicao(id)].name &&
-           fone === fornecedorList[handlePosicao(id)].telefone &&
-           novoBairro === fornecedorList[handlePosicao(id)].bairro &&
-           cep === fornecedorList[handlePosicao(id)].cep &&
-           tipo === fornecedorList[handlePosicao(id)].tipo)
-           
-           {
-                alert("Ao menos um campo precisa ser alterado antes de ser enviado!");
-           }    
+        
         else{
         
             const json = await api.fornecedorUpdate(id, cnpj, cpf, nome, novoTipo, fone, novoBairro, cep);
@@ -139,6 +174,7 @@ const Page = () => {
             setCep('');
             setStatus('');
             setNovoTipo('');
+            setTipo('');
             window.location.reload("/listarFornecedor");
         }
 
@@ -502,7 +538,7 @@ const Page = () => {
                                     <div className="modal-header">
                                         <h4 className="modal-title">Alterar dados do Fornecedor</h4>
                                         <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">×</span>
+                                        <span aria-hidden="true" onClick={() => {setPessoaFisica(false); setPessoaJuridica(false); setTipo('')}} >×</span>
                                         </button>
                                     </div>
                                     <div className="modal-body">
@@ -607,14 +643,14 @@ const Page = () => {
                                             <div style={{width: 286}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Física:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => setPessoaFisica(!pessoaFisica)} onClick={() => {setNovoTipo("pessoaFisica")}} /> 
+                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setTipo("pessoaFisica")}} /> 
                                                 </div>
                                             </div>
                         
                                             <div style={{width: 250}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => setPessoaJuridica(!pessoaJuridica)} onClick={() => {setNovoTipo("pessoaJuridica")}} /> 
+                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setTipo("pessoaJuridica")}} /> 
                                                 </div>
                                             </div>
                                             
@@ -622,7 +658,7 @@ const Page = () => {
                                         </div>
                                             <div className="modal-footer justify-content-between">
                                                 <button type="button" className="btn btn-default" data-dismiss="modal">Fechar</button>
-                                                <button type="button" className="btn btn-primary" onClick={() => {handleAlterar()}}>Salvar</button>
+                                                <button type="button" className="btn btn-primary" onClick={handleAlterar}>Salvar</button>
                                             </div>
                                 </div>
                                 {/* /.modal-content */}
