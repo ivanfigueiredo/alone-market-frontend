@@ -61,7 +61,7 @@ const Page = () => {
                     <div style={{padding: 30, marginLeft: 40, display:"flex", flexWrap:"wrap"}}>
                         
                         <div>
-                            {/* Nome do Produto */}
+                            {/* Nome do Usuario */}
                             <label>Usuário:</label>
                             <div style={{backgroundColor: "#FFF", width: 300}} className="form-group">
                                 <div className="input-group-prepend">
@@ -73,7 +73,7 @@ const Page = () => {
                             </div>    
                         </div>
                         <div className="ml-5">
-                            {/* Nome do Produto */}
+                            {/* Senha */}
                             <label>Password:</label>
                             <br />
                             <div style={{width: 300, backgroundColor: "#FFF"}} className="form-group">

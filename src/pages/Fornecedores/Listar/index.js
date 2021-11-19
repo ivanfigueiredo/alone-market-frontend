@@ -65,9 +65,50 @@ const Page = () => {
 
     const handleAlterar = async () => {
         
+
+
         if(!logged){
             alert("Você não está logado!");
         }
+
+        if(cnpj){
+            let cnpjCheck = false, 
+                foneCheck = false,
+                cepCheck = false;
+            if(cnpj.length < 18){ 
+                cnpjCheck = true;
+            }
+            if(fone.length < 14){
+                foneCheck = true;
+            }
+            if(cep.length < 9){
+                cepCheck = true;
+            }
+            alert((cnpjCheck ? "CNPJ Inválido. Faltando: "+(18 - cnpj.length)+" dígito!" : '')
+            +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
+            +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
+            return;
+        } 
+
+        if(cpf){
+            let cpfCheck = false, 
+                foneCheck = false,
+                cepCheck = false;
+
+            if(cpf.length < 14){
+                cpfCheck = true;
+            }
+            if(fone.length < 14){
+                foneCheck = true;
+            }
+            if(cep.length < 9){
+                cepCheck = true;
+            }
+            alert((cpfCheck ? "CPF Inválido. Faltando: "+(14 - cpf.length)+" dígito!" : '')
+            +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
+            +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
+            return;
+        }       
         if(cnpj === fornecedorList[handlePosicao(id)].cnpj &&
            cpf === fornecedorList[handlePosicao(id)].cpf &&
            nome === fornecedorList[handlePosicao(id)].name &&
@@ -160,19 +201,19 @@ const Page = () => {
 
     const handleStatus = async (id, status) => {
         
+        var res=window.confirm("Realmente deseja alterar o Status do Fornecedor?");
+
         if(!logged){
             alert("Você não está logado!");
-        }else{
-
+        }
+        if(res){
             const json = await api.fornecedorStatus(id, status);
-
             if(json.error){
                 alert(JSON.stringify(json.error));
-            }
-
-            
-            window.location.reload("/listarFornecedor");
-            
+            }            
+            window.location.reload("/listarFornecedor");            
+        }else{
+            return;
         }
 
     }

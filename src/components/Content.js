@@ -5,20 +5,18 @@ const Content = () => {
     const api = useApi();
 
     const [listarEstoque, setListarEstoque] = useState([]);
-    const [estokVencimento, setEstokVencimento] = useState([]);
-    
+    const [estokVencimento, setEstokVencimento] = useState([]);                  
 
     useEffect(() => {
         const estoqueList = async () => {
-            const sList = await api.getListaEstoque();
-            setListarEstoque(sList.filter((stok) => (stok.qtd <= stok.qtdMinima * 0.3))); 
-
-            setEstokVencimento(sList.filter((stok) => ((calcularData(stok.dataValidade) <= 30) ? stok : null)));
-
-                       
-        }        
-        estoqueList();
-    }, []);    
+            const sList = await api.getListaEstoque();                       
+            setListarEstoque(sList.filter((stok) => (stok.qtd <= stok.qtdMinima * 0.3)));
+            setEstokVencimento(sList.filter((stok) => ((calcularData(stok.dataValidade) <= 30) ? stok: null))); 
+                          
+            api.altProdVencidos(1, true);
+        }                  
+        estoqueList();                                     
+    }, [2]);        
 
     const calcularData = (dataNew) => {
         let dataNova = dataNew.split("/");
@@ -202,7 +200,7 @@ const Content = () => {
 
                                                     null
                                                 );                                                
-                                            })}     
+                                            })}                                            
                                         </tbody>
                                     </table>
                                 </div>

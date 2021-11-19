@@ -44,7 +44,6 @@ const Page = () => {
         
         if(!logged){
             alert("Você não está logado!");
-
         }
         if(!codigo || !nome || !preco || !valorVenda || !unidadeDeMedida || !pesoVolume || !fabricante || !fornecedor || !status){
             let codigoCheck = false, 
@@ -214,13 +213,17 @@ const Page = () => {
                         </div>
                         <div className="mt-2 mr-5">
                             {/*Preço do Produto*/}
-                            <label>Preço:</label>
+                            <label>Valor Compra:</label>
                             <div style={{width: 250, backgroundColor: "#FFF"}} className="form-group mb-1">
                                 <div className="input-group-prepend">
                                     <div className="input-group-text">
                                         <span className="fas fa-dollar-sign" />
                                     </div>
-                                    <input type="text" style={{width: 139}} className="form-control" placeholder="Preco" value={preco} onChange={(e)=>{setPreco(e.target.value)}}/>
+                                    <input type="text" style={{width: 139}} className="form-control" placeholder="valor compra" value={preco} onChange={(e)=>{setPreco(e.target.value
+                                        .replace(/\D/g, '')
+                                        .replace(/(\d{1,2})$/, ',$1')
+                                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')
+                                        )}}/>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +235,10 @@ const Page = () => {
                                     <div className="input-group-text">
                                         <span className="fas fa-dollar-sign" />
                                     </div>
-                                    <input type="text" style={{width: 139}} className="form-control" placeholder="Valor" value={valorVenda} onChange={(e)=>{setValorVenda(e.target.value)}}/>
+                                    <input type="text" style={{width: 139}} className="form-control" placeholder="valor venda" value={valorVenda} onChange={(e)=>{setValorVenda(e.target.value
+                                        .replace(/\D/g, '')
+                                        .replace(/(\d{1,2})$/, ',$1')
+                                        .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'))}}/>
                                 </div>
                             </div>
                         </div>
@@ -244,7 +250,7 @@ const Page = () => {
                                     <div className="input-group-text">
                                         <span className="fas fa-weight-hanging" />
                                     </div>
-                                    <input type="text" style={{width: 139}} className="form-control" value={pesoVolume} onChange={(e)=>{setPesoVolume(e.target.value.replace(/\D/, ''))}}/>
+                                    <input type="text" style={{width: 139}} className="form-control" value={pesoVolume} onChange={(e)=>{setPesoVolume(e.target.value.replace(/\D/g, ''))}}/>
                                 </div>
                             </div>
                         </div>                        

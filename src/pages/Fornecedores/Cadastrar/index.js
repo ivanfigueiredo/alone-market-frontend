@@ -1,4 +1,4 @@
-import React, { useState, useRef} from 'react'
+import React, { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import useApi from '../../../helpers/AloneAPI';
 import { isLogged, mudarTitulo } from '../../../helpers/AuthHandler';
@@ -27,7 +27,7 @@ const Page = () => {
     const [disableCnpj, setDisableCnpj] = useState(false);
     const [disableCpf, setDisableCpf] = useState(false);
 
-    const opcaoStatus = ["Ativo", "Inativo"];
+    const opcaoStatus = ["Ativo", "Inativo"];    
 
     const handleCadastrar = async () => {         
         
@@ -57,7 +57,7 @@ const Page = () => {
             if(!status){
                 statusCheck = true;
             }
-            if(cnpjCheck || foneCheck || cepCheck){
+            if(cnpjCheck || foneCheck || cepCheck || razaoSocialCheck || bairroCheck || statusCheck){
                 alert((cnpjCheck ? "CNPJ Inválido. Faltando: " + (18 - cnpj.length)+" dígito!" : '')
                 +(foneCheck ? "\nTelefone inválido. Faltando: " + (14 - telefone.length)+" dígito!" : '')
                 +(cepCheck ? "\nCEP Inválido. Faltando: " + (9 - cep.length)+" dígito!" : '')
@@ -95,7 +95,7 @@ const Page = () => {
             if(!status){
                 statusCheck = true;
             }
-            if(cpfCheck || foneCheck || cepCheck || razaoSocialCheck || bairroCheck){
+            if(cpfCheck || foneCheck || cepCheck || razaoSocialCheck || bairroCheck || statusCheck){
                 alert((cpfCheck ? "CPF Inválido. Faltando: " + (14 - cpf.length)+" dígito!" : '')
                 +(foneCheck ? "\nTelefone inválido. Faltando: " + (14 - telefone.length)+" dígito!" : '')
                 +(cepCheck ? "\nCEP Inválido. Faltando: " + (9 - cep.length)+" dígito!" : '')
@@ -165,6 +165,10 @@ const Page = () => {
         setCep('');
         setBairro('');
         setStatus('');
+        setDisableCnpj(false);
+        setDisableCpf(false);
+        setPessoaFisica(false);
+        setPessoaJuridica(false);
     }    
    
     return (
@@ -179,14 +183,14 @@ const Page = () => {
                         <div style={{width: 286}}>
                             <label style={{fontSize: 18}}>Pessoa Física:</label>
                             <div>
-                                <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setDisableCnpj(disableCnpj ? false : true); setPessoaJuridica(false); setDisableCpf(false)}} onClick={() => {setTipo("pessoaFisica")}} /> 
+                                <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setDisableCnpj(disableCnpj ? false : true); setPessoaJuridica(false); setDisableCpf(false); setCnpj('')}} onClick={() => {setTipo("pessoaFisica")}} /> 
                             </div>
                         </div>
                         
                         <div style={{width: 250, marginRight: 150}}>
                             <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
                             <div>
-                                <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setDisableCpf(disableCpf ? false : true); setPessoaFisica(false); setDisableCnpj(false)}} onClick={() => {setTipo("pessoaJuridica")}} /> 
+                                <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setDisableCpf(disableCpf ? false : true); setPessoaFisica(false); setDisableCnpj(false); setCpf('')}} onClick={() => {setTipo("pessoaJuridica")}} /> 
                             </div>
                         </div>
                         

@@ -27,7 +27,7 @@ export class ComponentToPrint extends React.PureComponent {
               );
             })}
           </tbody>
-            <tfoot>
+            <tfoot style={{textAlign:"center"}}>
               <th>Name</th>
               <th>Status</th>
               <th>Permissão</th>
