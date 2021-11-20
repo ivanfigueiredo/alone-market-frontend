@@ -393,7 +393,7 @@ const Page = () => {
                                                         <div className="input-group-text">
                                                             <span className="fas fa-shipping-fast" />
                                                         </div>
-                                                        <input type="text" className="form-control" placeholder="Qtd" value={qtd} onChange={(e) => {setQtd(e.target.value)}} />
+                                                        <input type="text" className="form-control" placeholder="Qtd" value={qtd} onChange={(e) => {setQtd(e.target.value.replace(/\D/, ''))}} />
                                                     </div>
                                                 </div>
                                             </div>
@@ -406,7 +406,7 @@ const Page = () => {
                                                         <div className="input-group-text">
                                                             <span className="fas fa-building" />
                                                         </div>
-                                                        <input type="text" className="form-control" placeholder="Qtd Mínima" value={qtdMinima} onChange={(e) => {setQtdMinima(e.target.value)}} />
+                                                        <input type="text" className="form-control" placeholder="Qtd Mínima" value={qtdMinima} onChange={(e) => {setQtdMinima(e.target.value.replace(/\D/, ''))}} />
                                                     </div>
                                                 </div>
                                             </div>

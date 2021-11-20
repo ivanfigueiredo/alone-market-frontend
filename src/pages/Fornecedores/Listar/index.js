@@ -77,14 +77,19 @@ const Page = () => {
            fone === fornecedorList[handlePosicao(id)].telefone &&
            novoBairro === fornecedorList[handlePosicao(id)].bairro &&
            cep === fornecedorList[handlePosicao(id)].cep &&
-           tipo === fornecedorList[handlePosicao(id)].tipo)
+           novoTipo === fornecedorList[handlePosicao(id)].tipo)
            
            {
                 alert("Ao menos um campo precisa ser alterado antes de ser enviado!");
                 return;
            }    
 
-        if((cnpj && pessoaFisica) || (cpf && pessoaJuridica)){
+        if(cnpj && pessoaFisica){ 
+            alert("Tipo de fornecedor inválido! \nEscolha CNPJ para pessoa Jurídica ou CPF para pessoa física.");
+            return;
+        }
+
+        if(cpf && pessoaJuridica){
             alert("Tipo de fornecedor inválido! \nEscolha CNPJ para pessoa Jurídica ou CPF para pessoa física.");
             return;
         }
@@ -128,10 +133,10 @@ const Page = () => {
                 cepCheck = true;
             }
             if(cnpjCheck || foneCheck || cepCheck){
-            alert((cnpjCheck ? "CNPJ Inválido. Faltando: "+(18 - cnpj.length)+" dígito!" : '')
-            +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
-            +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
-            return;
+                alert((cnpjCheck ? "CNPJ Inválido. Faltando: "+(18 - cnpj.length)+" dígito!" : '')
+                +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
+                +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
+                return;
             }
         } 
 
@@ -149,34 +154,33 @@ const Page = () => {
             if(cep.length < 9){
                 cepCheck = true;
             }
-            alert((cpfCheck ? "CPF Inválido. Faltando: "+(14 - cpf.length)+" dígito!" : '')
-            +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
-            +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
-            return;
+            if(cpfCheck || foneCheck || cepCheck){
+                alert((cpfCheck ? "CPF Inválido. Faltando: "+(14 - cpf.length)+" dígito!" : '')
+                +(foneCheck ? "\nTelefone inválido. Faltando: "+(14 - fone.length)+" dígito!" : '')
+                +(cepCheck ? "\nCEP Inválido. Faltando: "+(9 - cep.length)+" dígito!" : ''));
+                return;
+            }
         }       
         
-        else{
-        
-            const json = await api.fornecedorUpdate(id, cnpj, cpf, nome, novoTipo, fone, novoBairro, cep);
+        const json = await api.fornecedorUpdate(id, cnpj, cpf, nome, novoTipo, fone, novoBairro, cep);
 
-            if(json.error){
-                alert(JSON.stringify(json.error));
-            }else{
-                alert("O Fornecedor foi atualizado com sucesso!");
-                
-            }
-
-            setCnpj('');
-            setCpf('');
-            setNome('');
-            setFone('');                                    
-            setNovoBairro('');
-            setCep('');
-            setStatus('');
-            setNovoTipo('');
-            setTipo('');
-            window.location.reload("/listarFornecedor");
+        if(json.error){
+            alert(JSON.stringify(json.error));
+        }else{
+            alert("O Fornecedor foi atualizado com sucesso!");
+            
         }
+
+        setCnpj('');
+        setCpf('');
+        setNome('');
+        setFone('');                                    
+        setNovoBairro('');
+        setCep('');
+        setStatus('');
+        setNovoTipo('');
+        setTipo('');
+        window.location.reload("/listarFornecedor");
 
     }
 
@@ -643,14 +647,14 @@ const Page = () => {
                                             <div style={{width: 286}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Física:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setTipo("pessoaFisica")}} /> 
+                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setNovoTipo("pessoaJuridica")}} /> 
                                                 </div>
                                             </div>
                         
                                             <div style={{width: 250}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setTipo("pessoaJuridica")}} /> 
+                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setNovoTipo("pessoaFisica")}} /> 
                                                 </div>
                                             </div>
                                             
