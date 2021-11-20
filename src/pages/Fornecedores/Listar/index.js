@@ -647,14 +647,14 @@ const Page = () => {
                                             <div style={{width: 286}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Física:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setNovoTipo("pessoaJuridica")}} /> 
+                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setNovoTipo("pessoaFisica")}} /> 
                                                 </div>
                                             </div>
                         
                                             <div style={{width: 250}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setNovoTipo("pessoaFisica")}} /> 
+                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setNovoTipo("pessoaJuridica")}} /> 
                                                 </div>
                                             </div>
                                             
