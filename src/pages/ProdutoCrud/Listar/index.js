@@ -4,7 +4,7 @@ import Header from '../../../components/Header';
 import Menu from '../../../components/Menu';
 import Footer from '../../../components/Footer';
 import useApi from '../../../helpers/AloneAPI';
-import { mudarTitulo, isLogged, doLogin } from '../../../helpers/AuthHandler';
+import { mudarTitulo, isLogged } from '../../../helpers/AuthHandler';
 import {ExportCSV} from './ExportCSV';
 
 import { useReactToPrint } from 'react-to-print';
@@ -30,6 +30,7 @@ const Page = () => {
 
     const [produtoList, setProdutoList] = useState([]);
     const [listaMedidas, setListaMedidas] = useState([]);
+    const [listaFornecedores, setListaFornecedores] = useState([]);
     const [codigo, setCodigo] = useState('');
     const [novoNome, setNovoNome] = useState('');
     const [novoPreco, setNovoPreco] = useState('');
@@ -49,8 +50,13 @@ const Page = () => {
             const ulist = await api.getMedidas();
             setListaMedidas(ulist);
         }
+        const listFornecedor = async () => {
+            const fList = await api.listarTodosFornecedores();            
+            setListaFornecedores(fList.filter((forn) => forn.status.includes("Ativo")));
+        }
         getMedidas();
         getListProduto();
+        listFornecedor();
     }, []);
 
     const handleGerarDocumento = async () => {
@@ -73,7 +79,13 @@ const Page = () => {
             novoFabricante === produtoList[handlePosicao(codigo)].fabricante &&
             novoFornecedor === produtoList[handlePosicao(codigo)].fornecedor){
             alert("Ao menos um campo precisa ser alterado antes de ser enviado!");
+            return;
         }    
+
+        if(!novoNome || !novoPreco || !novoValorVenda || !uniMedida || !novoPesoVolume || !novoFabricante || !novoFornecedor){
+            alert("Os campos não podem ser alterados em branco!");
+            return;
+        }
         else{
         
             const json = await api.editProdAction(codigo, novoNome, novoPreco, novoValorVenda, uniMedida, novoPesoVolume, novoFabricante, novoFornecedor);
@@ -338,14 +350,22 @@ const Page = () => {
                                                 </div>    
                                             </div>
                                             <div className="mt-2">
-                                                {/* Fornecedor */}
+                                                {/*Lista de Unidade de Medidas*/}
                                                 <label>Fornecedor:</label>
-                                                <div style={{width: 400, backgroundColor: "#FFF"}} className="form-group mb-1">
-                                                    <div className="input-group-prepend">
-                                                        <div className="input-group-text">
-                                                            <span className="fas fa-shipping-fast" />
+                                                <div style={{width: 400}} className="col-md-5">
+                                                    <div className="form-group" style={{marginLeft: -8, width: 400}}>
+                                                        <div className="input-group-prepend">
+                                                            <div className="input-group-text">
+                                                                <span className="fas fa-shipping-fast" />
+                                                            </div>
+                                                            <select className="form-control" value={novoFornecedor} onChange={e=>{setNovoFornecedor(e.target.value)}}>
+                                                                {listaFornecedores.map((item, index) => {
+                                                                    return(
+                                                                        <option key={index}>{item.name}</option>
+                                                                    );
+                                                                })}
+                                                            </select>
                                                         </div>
-                                                        <input style={{wdith: 300}} type="text" className="form-control" placeholder="fornecedor" value={novoFornecedor} onChange={(e)=>{setNovoFornecedor(e.target.value)}}/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -414,7 +434,6 @@ const Page = () => {
                                                                 <span className="fas fa-ruler-vertical" />
                                                             </div>
                                                             <select className="form-control" style={{width: 300}} value={uniMedida} onChange={e=>{setUniMedida(e.target.value)}}>
-                                                                <option></option>
                                                                 {listaMedidas.map((item, index) => {
                                                                     return(
                                                                         <option key={index}>{item.name}</option>
