@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BrowserRouter } from 'react-router-dom';
 import useApi from '../../../helpers/AloneAPI';
-import { isLogged, mudarTitulo } from '../../../helpers/AuthHandler';
+import { isLogged, mudarTitulo, validarCPF, validarCNPJ } from '../../../helpers/AuthHandler';
 import Header from '../../../components/Header';
 import Menu from '../../../components/Menu';
 import Footer from '../../../components/Footer';
@@ -42,6 +42,12 @@ const Page = () => {
             if(cnpj.length < 18){ 
                 cnpjCheck = true;
             }
+
+            if(!validarCNPJ(cnpj)){
+                alert("Os números informados não correspondem a um CNPJ válido. \nInforme um CNPJ válido.");
+                return;
+            }
+
             if(telefone.length < 14){
                 foneCheck = true;
             }
@@ -69,6 +75,8 @@ const Page = () => {
             }                     
         } 
 
+
+
         if(disableCnpj){
             let cpfCheck = false, 
                 foneCheck = false,
@@ -80,6 +88,12 @@ const Page = () => {
             if(cpf.length < 14){
                 cpfCheck = true;
             }
+
+            if(!validarCPF(cpf)){
+                alert("Os números informados não correspondem a um CPF válido. \nInforme um CPF válido.");
+                return;
+            }
+            
             if(telefone.length < 14){
                 foneCheck = true;
             }

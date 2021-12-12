@@ -4,7 +4,7 @@ import Header from '../../../components/Header';
 import Menu from '../../../components/Menu';
 import Footer from '../../../components/Footer';
 import useApi from '../../../helpers/AloneAPI';
-import {mudarTitulo, isLogged} from '../../../helpers/AuthHandler';
+import {mudarTitulo, isLogged, validarCNPJ, validarCPF} from '../../../helpers/AuthHandler';
 
 import {ExportCSV} from './ExportCSV';
 
@@ -126,6 +126,12 @@ const Page = () => {
             if(cnpj.length < 18){ 
                 cnpjCheck = true;
             }
+
+            if(!validarCNPJ(cnpj)){
+                alert("Os números informados não correspondem a um CNPJ válido. \nInforme um CNPJ válido.");
+                return;
+            }
+            
             if(fone.length < 14){
                 foneCheck = true;
             }
@@ -148,6 +154,12 @@ const Page = () => {
             if(cpf.length < 14){
                 cpfCheck = true;
             }
+
+            if(!validarCPF(cpf)){
+                alert("Os números informados não correspondem a um CPF válido. \nInforme um CPF válido.");
+                return;
+            }
+
             if(fone.length < 14){
                 foneCheck = true;
             }
@@ -647,14 +659,14 @@ const Page = () => {
                                             <div style={{width: 286}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Física:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setNovoTipo("pessoaFisica")}} /> 
+                                                    <input type="checkbox" checked={pessoaFisica} onChange={() => {setPessoaFisica(!pessoaFisica); setPessoaJuridica(!pessoaJuridica)}} onClick={() => {setNovoTipo("pessoaJuridica")}} /> 
                                                 </div>
                                             </div>
                         
                                             <div style={{width: 250}} class="mt-4">
                                                 <label style={{fontSize: 18}}>Pessoa Jurídica:</label>
                                                 <div>
-                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setNovoTipo("pessoaJuridica")}} /> 
+                                                    <input type="checkbox" checked={pessoaJuridica} onChange={() => {setPessoaJuridica(!pessoaJuridica); setPessoaFisica(!pessoaFisica)}} onClick={() => {setNovoTipo("pessoaFisica")}} /> 
                                                 </div>
                                             </div>
                                             
